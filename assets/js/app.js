@@ -1,3 +1,6 @@
+
+// Initialize Firebase
+=======
 $('.ui.dropdown')
   .dropdown()
 
@@ -5,22 +8,22 @@ $('.ui.dropdown')
 //   .modal('show')
 
 var config = {
-  apiKey: "AIzaSyBmJjTJAfh_Ac-Avjv6Ner04beQyEgsaMk",
-  authDomain: "chatroomex-9d442.firebaseapp.com",
-  databaseURL: "https://chatroomex-9d442.firebaseio.com",
-  projectId: "chatroomex-9d442",
-  storageBucket: "chatroomex-9d442.appspot.com",
-  messagingSenderId: "879799709906"
+apiKey: "AIzaSyC6z6KejFb66xYspFuNS9nZ8lHbDop_luI",
+authDomain: "vitamind-b6c3c.firebaseapp.com",
+databaseURL: "https://vitamind-b6c3c.firebaseio.com",
+projectId: "vitamind-b6c3c",
+storageBucket: "vitamind-b6c3c.appspot.com",
+messagingSenderId: "870980303877"
 };
-
 firebase.initializeApp(config);
+
 const db = firebase.database()
-const userRef = db.ref('/user')
-const itemRef = db.ref('/item')
+const userRef = db.ref('user')
+const itemRef = db.ref('item')
 
     
 
-let nutrionixObj = {
+let nutObj = {
     // retrieves a singular item from the nutrionix api
     getItem (str) {
         var settings = {
@@ -58,13 +61,24 @@ let nutrionixObj = {
             }
 
         $.ajax(settings2).done(function (response) {
-            console.log(response)
-            return response
+            console.log(response.common)
+            return response.common
         })
     }
 }
 
 let user = {
+    addUser (uname, pwd, n) {
+        userRef.once('value', function(snapshot) {
+            if (snapshot.hasChild(uname)) {
+              alert('exists');
+            }else{
+                userRef.child(uname).set({
+                    password: pwd
+                })
+            }
+        })
+    },
     // checks local storage for a user and password
     authUser () {
       if(!localStorage.getItem('user_data')) {
@@ -128,7 +142,7 @@ let user = {
     }
   }
 
-let userNutrients = {
+let nutrients = {
   // gets an item by id
   getItem(item_id){
     itemRef.on("value", function(snapshot) {
@@ -170,4 +184,11 @@ let userNutrients = {
   }
 }
 
-console.log(user.authUser())
+
+
+let n = nutObj.getItemList('hamburger')
+
+user.addUser('bunrith','a','c')
+//user.addUser('bunrith','b','d')
+// console.log(user.authUser())
+// console.log(n)
