@@ -1,6 +1,5 @@
 
 // Initialize Firebase
-=======
 $('.ui.dropdown')
   .dropdown()
 
