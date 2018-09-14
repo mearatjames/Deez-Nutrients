@@ -70,7 +70,7 @@ let user = {
     addUser (uname, pwd, n) {
         userRef.once('value', function(snapshot) {
             if (snapshot.hasChild(uname)) {
-              alert('exists');
+              alert('your user name exists. this alert needs to be refactored into on page textbox validation');
             }else{
                 userRef.child(uname).set({
                     password: pwd
@@ -182,12 +182,3 @@ let nutrients = {
     return false
   }
 }
-
-
-
-let n = nutObj.getItemList('hamburger')
-
-user.addUser('bunrith','a','c')
-//user.addUser('bunrith','b','d')
-// console.log(user.authUser())
-// console.log(n)
