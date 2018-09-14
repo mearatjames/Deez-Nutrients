@@ -1,10 +1,19 @@
+$(document)
+  .ready(function() {
+    // create sidebar and attach to menu open
+    $('.ui.sidebar')
+      .sidebar('attach events', '.toc.item')
+    ;
+  })
+
+//Toggle Modal
+$(document).on('click', 'a.header', function() {
+  $('.ui.modal')
+  .modal('show')
+;
+})
 
 // Initialize Firebase
-$('.ui.dropdown')
-  .dropdown()
-
-$('.ui.modal')
-  .modal('show')
 
 var config = {
 apiKey: "AIzaSyC6z6KejFb66xYspFuNS9nZ8lHbDop_luI",

@@ -10,96 +10,106 @@
 </head>
 
 <body>
-    <nav class="nav sixteen wide column">
-        <div class="ui top attached menu">
-            <div class="ui dropdown icon item">
-                <i class="wrench icon"></i>
-                <div class="menu">
-                    <div class="item">
-                        Open...
+        
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu">
+    <a class="active item">Home</a>
+    <a class="item">Nutrients Tracker</a>
+    <a class="item">Nutrients News</a>
+    <a class="item">About Us</a>
+    <a class="item">Login</a>
+    <a class="item">Signup</a>
+</div>
+
+<div class="pusher">
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui container">
+                <div class="ui large secondary inverted pointing menu">
+                    <a class="toc item">
+                        <i class="sidebar icon"></i>
+                    </a>
+                    <a class="active item">Home</a>
+                    <a class="item">Nutrients Tracker</a>
+                    <a class="item">Nutrients News</a>
+                    <a class="item">About Us</a>
+                    <div class="right item">
+                        <a class="ui inverted button">Log in</a>
+                        <a class="ui inverted button">Sign Up</a>
                     </div>
-                    <div class="item">
-                        Save...
-                    </div>
-                    <div class="item">Edit Permissions</div>
                 </div>
+            </div>
+        </div>
+    
+<main class="ui grid">
+    <div class="sixteen wide column ui center aligned">
+        <h1 class="brand">Deez Nutrients</h1>
+    </div>
+    <div class="sixteen wide column center aligned">
+        <div class="ui search big">
+            <div class="ui icon input">
+                <input class="prompt" type="text" placeholder="Input your food here!">
+                <i class="search icon"></i>
             </div>
             <div class="results"></div>
         </div>
-        </div>
-        </div>
-    </nav>
-    
-    <main class="ui grid">
-        <div class="sixteen wide column ui center aligned">
-            <h1>Deez Nutrients</h1>
-        </div>
-        <div class="sixteen wide column center aligned">
-            <div class="ui search">
-                <div class="ui icon input">
-                    <input class="prompt" type="text" placeholder="Input your food here!">
-                    <i class="search icon"></i>
+    </div>
+    <div class="main sixteen wide column ui left aligned">
+        <div class="ui celled list">
+            <div class="item">
+                <img class="ui avatar image" src="assets/images/green-broccoli-and-red-beef.png">
+                <div class="content">
+                    <a class="header">Double Double</a>
+                    In n' Out
                 </div>
-                <div class="results"></div>
             </div>
-        </div>
-        <div class="main">
-            <div class="ui celled list">
-                <div class="item">
-                    <img class="ui avatar image" src="">
-                    <div class="content">
-                        <div class="header">Snickerdoodle</div>
-                        An excellent companion
-                    </div>
+            <div class="item">
+                <img class="ui avatar image" src="assets/images/green-broccoli-and-red-beef.png">
+                <div class="content">
+                    <a class="header">Cheese Burger</a>
+                    McDonald
                 </div>
-                <div class="item">
-                    <img class="ui avatar image" src="">
-                    <div class="content">
-                        <div class="header">Poodle</div>
-                        A poodle, its pretty basic
-                    </div>
-                </div>
-                <div class="item">
-                    <img class="ui avatar image" src="">
-                    <div class="content">
-                        <div class="header">Paulo</div>
-                        He's also a dog
-                    </div>
+            </div>
+            <div class="item">
+                <img class="ui avatar image" src="assets/images/green-broccoli-and-red-beef.png">
+                <div class="content">
+                    <a class="header">Big Mac</a>
+                    McDonald
                 </div>
             </div>
         </div>
-        </main>
+    </div>
+    </div>
+    <div id="firstModal">
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header">
+                    Profile Picture
+                </div>
+                <div class="image content">
+                    <div class="ui medium image">
+                        <img src="/images/avatar/large/chris.jpg">
+                    </div>
+                    <div class="description">
+                        <div class="ui header">We've auto-chosen a profile image for you.</div>
+                        <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a>
+                            image associated with your registered e-mail address.</p>
+                        <p>Is it okay to use this photo?</p>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="ui black deny button">
+                        Nope
+                    </div>
+                    <div class="ui positive right labeled icon button">
+                        Yep, that's me
+                        <i class="checkmark icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
         
-        <!-- <div id="firstModal">
-                <div class="ui modal">
-                    <i class="close icon"></i>
-                    <div class="header">
-                        Profile Picture
-                    </div>
-                    <div class="image content">
-                        <div class="ui medium image">
-                            <img src="/images/avatar/large/chris.jpg">
-                        </div>
-                        <div class="description">
-                            <div class="ui header">We've auto-chosen a profile image for you.</div>
-                            <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a>
-                                image associated with your registered e-mail address.</p>
-                            <p>Is it okay to use this photo?</p>
-                        </div>
-                    </div>
-                    <div class="actions">
-                        <div class="ui black deny button">
-                            Nope
-                        </div>
-                        <div class="ui positive right labeled icon button">
-                            Yep, that's me
-                            <i class="checkmark icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-    </main>
-
+</div>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.js"></script>
