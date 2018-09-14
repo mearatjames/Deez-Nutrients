@@ -1,4 +1,12 @@
+
 // Initialize Firebase
+=======
+$('.ui.dropdown')
+  .dropdown()
+
+// $('.ui.modal')
+//   .modal('show')
+
 var config = {
 apiKey: "AIzaSyC6z6KejFb66xYspFuNS9nZ8lHbDop_luI",
 authDomain: "vitamind-b6c3c.firebaseapp.com",
