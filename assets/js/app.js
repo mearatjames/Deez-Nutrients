@@ -1,3 +1,9 @@
+$('.ui.dropdown')
+  .dropdown()
+
+// $('.ui.modal')
+//   .modal('show')
+
 var config = {
   apiKey: "AIzaSyBmJjTJAfh_Ac-Avjv6Ner04beQyEgsaMk",
   authDomain: "chatroomex-9d442.firebaseapp.com",
