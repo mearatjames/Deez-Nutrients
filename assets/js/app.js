@@ -8,7 +8,7 @@ $(document)
 
 //Toggle Modal
 $(document).on('click', 'a.header', function() {
-  $('.ui.modal')
+  $('.longer.modal')
   .modal('show')
 ;
 })
