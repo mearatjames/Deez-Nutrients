@@ -6,10 +6,44 @@
     <title>Deez Nutrients</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-    <h1>Deez Nutrients</h1>
-
 <body>
+    <nav class="nav sixteen wide column">
+        <div class="ui top attached menu">
+            <div class="ui dropdown icon item">
+                <i class="wrench icon"></i>
+                <div class="menu">
+                    <div class="item">
+                        Open...
+                    </div>
+                    <div class="item">
+                        Save...
+                    </div>
+                    <div class="item">Edit Permissions</div>
+                </div>
+            </div>
+            <div class="results"></div>
+        </div>
+        </div>
+        </div>
+    </nav>
+    
+    <main class="ui grid">
+        <div class="sixteen wide column ui center aligned" id="title">
+            <h1>Deez Nutrients</h1>
+        </div>
+        <div class="sixteen wide column center aligned">
+            <div class="ui search">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" placeholder="Input your food here!">
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+        </div>
+    </main>
+
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.js"></script>
