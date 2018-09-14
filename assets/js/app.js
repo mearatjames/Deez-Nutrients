@@ -1,8 +1,8 @@
 $('.ui.dropdown')
   .dropdown()
 
-// $('.ui.modal')
-//   .modal('show')
+$('.ui.modal')
+  .modal('show')
 
 var config = {
   apiKey: "AIzaSyBmJjTJAfh_Ac-Avjv6Ner04beQyEgsaMk",
