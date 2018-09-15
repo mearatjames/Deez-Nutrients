@@ -18,9 +18,12 @@ $(document).on('click', '#hLogin', function() {
   .modal('toggle');
 })
 
+//Nutritients Search Eventlistener
+$(document).on('click', 'div.nutritionSearch', function() {
+  console.log("Clicked!")
+})
 
-
-//Search Eventlistener
+//Search List Eventlistener
 $(document).on('click', '#search', function() {
   $('.brand').animate({
     margin: "20px 0px 10px 0px"
@@ -96,18 +99,18 @@ let nutObj = {
           $('#brandedFoods').empty()
             for (let i = 0; i < 4; i++) {
             $('#commonFoods').append(`
-            <div class="item">
+            <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.common[i].photo.thumb}">
                 <div class="content">
-                    <a class="header">${response.common[i].food_name}</a>
+                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
                 </div>
             </div>
             `);
             $('#brandedFoods').append(`
-            <div class="item">
+            <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
                 <div class="content">
-                    <a class="header">${response.branded[i].brand_name_item_name}</a>
+                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name}</a>
                 </div>
             </div>
             `)
