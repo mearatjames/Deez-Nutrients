@@ -185,12 +185,13 @@ let user = {
       })
   },
   getUser(){
-      let str = localStorage.getItem('user_data').split(',').trim()
+      let str = localStorage.getItem('user_data').split(',')
+      console.log(str[0])
       return str[0]
   }
 }
 
-let nutrients = {
+let fb = {
   // gets an item by id
   getItem(item_id){
     itemRef.on("value", function(snapshot) {
@@ -210,14 +211,16 @@ let nutrients = {
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val();
-        if(childData.user_id === str[0]){
-          user_item.push(childData.id)
+        if(childData.username === username){
+          user_item.push(childData.name)
         }
       })
     })
     return user_item
   },
   addItem(itemname){
+    console.log(user.getUser())
+    console.log(itemname)
       itemRef.push({
           username: user.getUser(),
           name: itemname
