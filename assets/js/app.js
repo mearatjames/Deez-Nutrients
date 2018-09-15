@@ -13,10 +13,151 @@ $(document).on('click', '.food .item', function() {
   .modal('toggle');
 })
 
-$(document).on('click', '#hLogin', function() {
+
+//login modal
+$(document).on('click', '.hLogin', function() {
   $('#loginModal')
   .modal('toggle');
 })
+
+
+//logout modal
+$(document).on('click', '.hLogout', function() {
+  let str = localStorage.getItem('user_data').split(',')
+  $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
+  $('#logoutModal')
+  .modal('toggle');
+})
+
+$(document).on('click', '#login', function() {
+  let username = $('#username').val().trim()
+  let password = $('#password').val().trim()
+  $('#form1 .message').empty();
+
+  if(!username){
+    $('#loginModal #form1').form('add errors', {
+      email: 'Username field is empty',
+    });
+  }else{
+      db.ref('/user/' + username).once('value', function(snapshot){
+          if(snapshot.val()){ 
+            if(!password){
+              console.log('here2')
+              $('#loginModal #form1').form('add errors', {
+                email: 'Password field is empty',
+              });
+            }else{
+              if(snapshot.val().password === password){
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  $('#loginModal ').modal('hide');
+                  user.login()
+              }else{
+                $('#loginModal #form1').form('add errors', {
+                  email: 'Password is incorrect',
+                });
+              }
+            }
+          }else{
+            $('#loginModal #form1').form('add errors', {
+              email: 'Username does not exist',
+            });
+          }
+      })
+    }
+})
+
+$('#loginModal #form1').form({
+  on: 'change',
+  fields: {
+    username: {
+      identifier: 'username',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    password: {
+      identifier: 'password',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    }
+  }
+});
+
+$('#loginModal #form2').form({
+  on: 'change',
+  fields: {
+    rusername: {
+      identifier: 'rusername',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    rpassword: {
+      identifier: 'rpassword',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    },
+    name: {
+      identifier: 'rname',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Name can not be empty'
+        }
+      ]
+    }
+  }
+});
+
+$(document).on('click', '#register', function() {
+  let username = $('#rusername').val().trim()
+  let password = $('#rpassword').val().trim()
+  let name = $('#rname').val().trim()
+  $('#form2 .message').empty();
+
+  userRef.once('value', function(snapshot) {
+      let issues = 0
+      let issuekp = {}
+      if(!username){
+        issuekp.uname1 = 'Username field is empty'
+        issues++
+      }else if(snapshot.hasChild(username)) {
+        issuekp.uname2 = `Username "${username}" is already taken.`
+        issues++
+      }
+      if(!password){
+        issuekp.pwd1 = 'Password field is empty'
+        issues++
+      }
+      if(!name){
+        issuekp.name1 = 'Name field is empty'
+        issues++
+      }
+      if(issues > 0){
+        $('#loginModal #form2').form('add errors', issuekp);
+      }else{
+        localStorage.setItem('user_data', `${username},${password},${name}`)
+        $('#loginModal ').modal('hide');
+        user.addUser(username, password, name)
+        user.login()
+      }
+  })
+})
+
 
 //Nutritients Search Eventlistener
 $(document).on('click', 'div.nutritionSearch', function() {
@@ -120,6 +261,17 @@ let nutObj = {
 }
 
 let user = {
+  login () {
+    $('.hLogin').html('Logout')
+    $('.hLogin').addClass('hLogout')
+    $('.hLogin').removeClass('hLogin')
+  },
+  logout () {
+    $('.hLogout').html('Login / Sign Up')
+    $('.hLogout').addClass('hLogin')
+    $('.hLogout').removeClass('hLogout')
+    localStorage.setItem('user_data', ``)
+  },
   addUser (uname, pwd, n) {
       userRef.once('value', function(snapshot) {
           if (snapshot.hasChild(uname)) {
@@ -138,26 +290,7 @@ let user = {
       return false
     }
     let user = localStorage.getItem('user_data').split(',')
-    return this.checkDB(user[0],user[1])
-  },
-
-  // validates user on login page
-  validateUser () {
-      let username = $('#username').val().trim()
-      let password = $('#password').val().trim()
-      db.ref('/user/' + username).once('value', function(snapshot){
-          if(snapshot.val()){                
-              if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password}`)
-                  console.log("Logging in, valid username and password")
-              }else{
-                  console.log("CheckDB: password doesnt match")
-                  alert("Password is incorrect")
-              }
-          }else{
-              alert("Username is not found")
-          }
-      })
+    this.checkDB(user[0],user[1])
   },
   // checks db to see if user exists, if so return true, else false
   checkDB (username, password) {
@@ -165,6 +298,7 @@ let user = {
           if(snapshot.val()){                
               if(snapshot.val().password === password){
                   console.log("CheckDB: password matches")
+                  user.login()
                   return true
               }else{
                   console.log("CheckDB: password doesnt match")
@@ -181,7 +315,6 @@ let user = {
       let str = localStorage.getItem('user_data').split(',')
       console.log('str[0] is ' + str[0])
       db.ref('/user/' + str[0]).once('value', function(snapshot){
-          console.log(str[0])
           if(snapshot.val().name === str[2]){
               return snapshot.val().name
           }
@@ -228,3 +361,5 @@ let fb = {
       })
   }
 }
+
+user.authUser()
