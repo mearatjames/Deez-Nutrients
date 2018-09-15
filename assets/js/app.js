@@ -10,7 +10,7 @@ $(document)
 //Toggle Modal
 $(document).on('click', '.food .item', function() {
   $('.longer.modal')
-  .modal('show');
+  .modal('toggle');
 })
 
 //Search Eventlistener
