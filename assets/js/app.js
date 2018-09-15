@@ -13,6 +13,13 @@ $(document).on('click', '.food .item', function() {
   .modal('toggle');
 })
 
+$(document).on('click', '#hLogin', function() {
+  $('#loginModal')
+  .modal('toggle');
+})
+
+
+
 //Search Eventlistener
 $(document).on('click', '#search', function() {
   $('.brand').animate({

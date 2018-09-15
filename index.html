@@ -19,8 +19,7 @@
         <a class="item">Nutrients Tracker</a>
         <a class="item">Nutrients News</a>
         <a class="item">About Us</a>
-        <a class="item">Login</a>
-        <a class="item">Signup</a>
+        <a class="item">Login / Sign Up</a>
     </div>
 
     <div class="pusher">
@@ -35,8 +34,7 @@
                     <a class="item">Nutrients News</a>
                     <a class="item">About Us</a>
                     <div class="right item">
-                        <a class="ui inverted button">Log in</a>
-                        <a class="ui inverted button">Sign Up</a>
+                        <a id="hLogin" class="ui inverted button">Login / Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -112,6 +110,7 @@
                 </div><!-- closing class="dvCalorieDiet line" -->
                 
             </div>
+
             <!-- Nutrition Image -->
             <div class="actions">
                 <div class="ui black deny button right">
@@ -122,6 +121,41 @@
                     <i class="checkmark icon"></i>
                 </div>
             </div>
+
+            <!-- Bunrith modal -->
+            <div id="loginModal" class="ui modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Login or Sign Up
+                    </div>
+                    <div class="content">
+                            <p>Do not have an account yet? <a id="register" href="/">Sign Up!</a></p>
+                            <form class="ui large form">
+                                <div class="field">
+                                    <div class="ui left icon input">
+                                        <i class="user icon"></i>
+                                        <input type="text" name="email" placeholder="E-mail address">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="password" placeholder="Password">
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                    <div class="actions">
+                        <div class="ui basic button" id="register">
+                            Sign Up
+                        </div>
+                        <div class="ui green button approve" id="login">
+                            Login
+                        </div>
+                     </div>
+                </div>
+
+    
         </div>
     </main>
 
