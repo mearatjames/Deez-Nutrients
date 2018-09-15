@@ -34,7 +34,7 @@
                     <a class="item">Nutrients News</a>
                     <a class="item">About Us</a>
                     <div class="right item">
-                        <a id="hLogin" class="ui inverted button">Login / Sign Up</a>
+                        <a class="ui inverted hLogin button">Login / Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -129,8 +129,9 @@
                         Login or Sign Up
                     </div>
                     <div class="content">
-                            <p>Do not have an account yet? <a id="register" href="/">Sign Up!</a></p>
-                            <form class="ui large form error">
+                            <div class="ui large header">Login</div>
+                            <p>Login using your username and password</p>
+                            <form id="form1" class="ui large form error">
                                 <div class="field">
                                     <div class="ui left icon input">
                                         <i class="user icon"></i>
@@ -144,19 +145,66 @@
                                     </div>
                                 </div>
                                 <div class="ui right algined inline field">
-                                        <button type="submit" id="login" class="ui black submit button" onclick="event.preventDefault()">Login</button>
+                                        <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
+                                </div>
+                                <div class="ui error message"></div>
+                            </form>
+                    </div>
+                    <div class="ui divider"></div>
+                    <div class="content">
+                            <div class="ui large left header">Register</div>
+                            <p>Sign Up Below!</p>
+                            <form id="form2" class="ui large form error">
+                                <div class="field">
+                                    <div class="ui left icon input">
+                                        <i class="user icon"></i>
+                                        <input type="text" name="rusername" id="rusername" placeholder="Username">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="rpassword" id="rpassword" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                        <div class="ui left icon input">
+                                        <i class="user icon"></i>
+                                        <input type="text" name="rname" id="rname" placeholder="Name">
+                                        </div>
+                                    </div>
+                                <div class="ui left inline field">
+                                        <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
                                 </div>
                                 <div class="ui error message"></div>
                             </form>
                     </div>
                     <div class="actions">
-                        <div class="ui basic button" id="register">
+                        <!-- <div class="ui basic button" id="register">
                             Sign Up
-                        </div>
+                        </div> -->
                      </div>
                 </div>
 
-    
+                <div id="logoutModal" class="ui basic modal">
+                    <div class="ui icon header">
+                        <i class="archive icon"></i>
+                        <a class="logoutModalHeader">Logging Out?</a>
+                    </div>
+                    <div class="content center">
+                        <p>By Clicking on Yes, you are logging out of the account and will be required to log back in.</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui red basic cancel inverted button">
+                        <i class="remove icon"></i>
+                        No
+                        </div>
+                        <div class="ui green ok inverted button" onclick="user.logout()">
+                        <i class="checkmark icon"></i>
+                        Yes
+                        </div>
+                    </div>
+                </div>  
         </div>
     </main>
 
