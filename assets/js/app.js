@@ -117,79 +117,78 @@ let nutObj = {
 }
 
 let user = {
-    addUser (uname, pwd, n) {
-        userRef.once('value', function(snapshot) {
-            if (snapshot.hasChild(uname)) {
-              alert('your user name exists. this alert needs to be refactored into on page textbox validation');
-            }else{
-                userRef.child(uname).set({
-                    password: pwd
-                })
-            }
-        })
-    },
-    // checks local storage for a user and password
-    authUser () {
-      if(!localStorage.getItem('user_data')) {
-        return false
-      }
-      let str = localStorage.getItem('user_data').split(',')
-      return this.checkDB(user[0],user[1])
-    },
-
-    // validates user on login page
-    validateUser () {
-      let username = $('#username').val().trim()
-      let password = $('#password').val().trim()
-      if(!this.checkDB(username,password)) {
-        return false
-      }    
-      localStorage.setItem('user_data', `${username},${password}`)
-      return true
-    },
-    // checks db to see if user exists, if so return true, else false
-    checkDB (username, password) {
-      userRef.on("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          if(childData.username === username){
-            if(childData.password === password){
-              return true
-            }
+  addUser (uname, pwd, n) {
+      userRef.once('value', function(snapshot) {
+          if (snapshot.hasChild(uname)) {
+            alert('your user name exists. this alert needs to be refactored into on page textbox validation');
+          }else{
+              userRef.child(uname).set({
+                  password: pwd,
+                  name: n
+              })
           }
-        })
       })
-      return false
-    },
-    
-    // get name of user's name by searching db for username
-    getName(){
-      let str = localStorage.getItem('user_data').split(',').trim()
-      let username = str[0]
-      userRef.on("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          if(childData.username === username){
-            return childData.name
-          }
-        })
-      })
-      return false
-    },
-    getId(){
-      let str = localStorage.getItem('user_data').split(',').trim()
-      let username = str[0]
-      userRef.on("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var childData = childSnapshot.val();
-          if(childData.username === username){
-            return childData.id
-          }
-        })
-      })
+  },
+  // checks local storage for a user and password str = 'user,pwd'
+  authUser () {
+    if(!localStorage.getItem('user_data')) {
       return false
     }
+    let user = localStorage.getItem('user_data').split(',')
+    return this.checkDB(user[0],user[1])
+  },
+
+  // validates user on login page
+  validateUser () {
+      let username = $('#username').val().trim()
+      let password = $('#password').val().trim()
+      db.ref('/user/' + username).once('value', function(snapshot){
+          if(snapshot.val()){                
+              if(snapshot.val().password === password){
+                  localStorage.setItem('user_data', `${username},${password}`)
+                  console.log("Logging in, valid username and password")
+              }else{
+                  console.log("CheckDB: password doesnt match")
+                  alert("Password is incorrect")
+              }
+          }else{
+              alert("Username is not found")
+          }
+      })
+  },
+  // checks db to see if user exists, if so return true, else false
+  checkDB (username, password) {
+      db.ref('/user/' + username).once('value', function(snapshot){
+          if(snapshot.val()){                
+              if(snapshot.val().password === password){
+                  console.log("CheckDB: password matches")
+                  return true
+              }else{
+                  console.log("CheckDB: password doesnt match")
+                  return false
+              }
+          }else{
+              alert("FATAL: user does not exist, cannot verify")
+          }
+      })
+  },
+  
+  // get name of user's name by searching db for username
+  getName(){
+      let str = localStorage.getItem('user_data').split(',')
+      console.log('str[0] is ' + str[0])
+      db.ref('/user/' + str[0]).once('value', function(snapshot){
+          console.log(str[0])
+          if(snapshot.val().name === str[2]){
+              return snapshot.val().name
+          }
+      })
+  },
+  getUser(){
+      let str = localStorage.getItem('user_data').split(',').trim()
+      return str[0]
   }
+}
 
 let nutrients = {
   // gets an item by id
@@ -208,27 +207,23 @@ let nutrients = {
     if(!user.authUser){
       return false
     }
+    let str = localStorage.getItem('user_data').split(',').trim()
+    let username = str[0]
     var user_item = []
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val();
-        if(childData.user_id === user.getId()){
+        if(childData.user_id === str[0]){
           user_item.push(childData.id)
         }
       })
     })
     return user_item
   },
-  addUserItem(itemid){
-    if(!user.authUser){
-      return false
-    }
-    userItemsRef.push({
-        name: document.querySelector('#tname-input').value,
-        destination : document.querySelector('#destination-input').value,
-        start_time: document.querySelector('#time-input').value,
-        frequency: document.querySelector('#frequency-input').value
-    })
-    return false
+  addItem(itemname){
+      itemRef.push({
+          username: user.getUser(),
+          name: itemname
+      })
   }
 }
