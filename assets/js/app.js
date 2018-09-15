@@ -219,8 +219,6 @@ let fb = {
     return user_item
   },
   addItem(itemname){
-    console.log(user.getUser())
-    console.log(itemname)
       itemRef.push({
           username: user.getUser(),
           name: itemname
