@@ -4,20 +4,26 @@ $(document)
     $('.ui.sidebar')
       .sidebar('attach events', '.toc.item')
     ;
+    $('.main').hide()
   })
 
 //Toggle Modal
 $(document).on('click', '.food .item', function() {
   $('.longer.modal')
-  .modal('show')
-;
+  .modal('show');
 })
 
 //Search Eventlistener
+$(document).on('click', '#search', function() {
+  $('.brand').animate({
+    margin: "20px 0px 10px 0px"
+  }, 1000)
+})
 $(document).on('keyup', '#search', search)
 
 //Search Function
 function search() {
+  $('.main').show()
   let str = $(this).val().trim()
   console.log(str)
   nutObj.getItemList(str)
