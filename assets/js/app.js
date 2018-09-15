@@ -7,7 +7,7 @@ $(document)
   })
 
 //Toggle Modal
-$(document).on('click', '.item', function() {
+$(document).on('click', '.food .item', function() {
   $('.longer.modal')
   .modal('show')
 ;
@@ -81,7 +81,7 @@ let nutObj = {
         $.ajax(settings2).done(function (response) {
           $('#commonFoods').empty()
           $('#brandedFoods').empty()
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 4; i++) {
             $('#commonFoods').append(`
             <div class="item">
                 <img class="ui avatar image" src="${response.common[i].photo.thumb}">
