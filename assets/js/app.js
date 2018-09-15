@@ -7,11 +7,21 @@ $(document)
   })
 
 //Toggle Modal
-$(document).on('click', 'a.header', function() {
+$(document).on('click', '.item', function() {
   $('.longer.modal')
   .modal('show')
 ;
 })
+
+//Search Eventlistener
+$(document).on('keyup', '#search', search)
+
+//Search Function
+function search() {
+  let str = $(this).val().trim()
+  console.log(str)
+  nutObj.getItemList(str)
+}
 
 // Initialize Firebase
 
@@ -57,7 +67,7 @@ let nutObj = {
     // might not have specifics so you might need to use getItem(str) with the string found
     getItemList(str) {
         var settings2 = {
-            url: 'https://trackapi.nutritionix.com/v2/search/instant?common=true&query=banana',
+            url: 'https://trackapi.nutritionix.com/v2/search/instant?query=' + str,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,8 +79,26 @@ let nutObj = {
             }
 
         $.ajax(settings2).done(function (response) {
-            console.log(response.common)
-            return response.common
+          $('#commonFoods').empty()
+          $('#brandedFoods').empty()
+            for (let i = 0; i < 5; i++) {
+            $('#commonFoods').append(`
+            <div class="item">
+                <img class="ui avatar image" src="${response.common[i].photo.thumb}">
+                <div class="content">
+                    <a class="header">${response.common[i].food_name}</a>
+                </div>
+            </div>
+            `);
+            $('#brandedFoods').append(`
+            <div class="item">
+                <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
+                <div class="content">
+                    <a class="header">${response.branded[i].brand_name_item_name}</a>
+                </div>
+            </div>
+            `)
+            }
         })
     }
 }
