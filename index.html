@@ -130,27 +130,28 @@
                     </div>
                     <div class="content">
                             <p>Do not have an account yet? <a id="register" href="/">Sign Up!</a></p>
-                            <form class="ui large form">
+                            <form class="ui large form error">
                                 <div class="field">
                                     <div class="ui left icon input">
                                         <i class="user icon"></i>
-                                        <input type="text" name="email" placeholder="E-mail address">
+                                        <input type="text" name="username" id="username" placeholder="Username">
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui left icon input">
                                     <i class="lock icon"></i>
-                                    <input type="password" name="password" placeholder="Password">
+                                    <input type="password" name="password" id="password" placeholder="Password">
                                     </div>
                                 </div>
+                                <div class="ui right algined inline field">
+                                        <button type="submit" id="login" class="ui black submit button" onclick="event.preventDefault()">Login</button>
+                                </div>
+                                <div class="ui error message"></div>
                             </form>
                     </div>
                     <div class="actions">
                         <div class="ui basic button" id="register">
                             Sign Up
-                        </div>
-                        <div class="ui green button approve" id="login">
-                            Login
                         </div>
                      </div>
                 </div>

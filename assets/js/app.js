@@ -13,10 +13,83 @@ $(document).on('click', '.food .item', function() {
   .modal('toggle');
 })
 
+
+//login modal
 $(document).on('click', '#hLogin', function() {
   $('#loginModal')
   .modal('toggle');
 })
+
+$('#loginModal').modal({
+  onApprove: function() {
+      console.log('Approve');
+      return user.validateUser()
+  }
+})
+
+$(document).on('click', '#login', function() {
+  let username = $('#username').val().trim()
+  let password = $('#password').val().trim()
+  console.log(username + ' ' + password)
+  $('form .message').empty();
+
+  if(!username){
+    $('#loginModal form').form('add errors', {
+      email: 'Username field is empty',
+    });
+  }else{
+      db.ref('/user/' + username).once('value', function(snapshot){
+        console.log('here')
+          if(snapshot.val()){ 
+            if(!password){
+              console.log('here2')
+              $('#loginModal form').form('add errors', {
+                email: 'Password field is empty',
+              });
+            }else{
+              if(snapshot.val().password === password){
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  $('#loginModal').modal('hide');
+              }else{
+                $('#loginModal form').form('add errors', {
+                  email: 'Password is incorrect',
+                });
+              }
+            }
+          }else{
+            $('#loginModal form').form('add errors', {
+              email: 'Username does not exist',
+            });
+          }
+      })
+    }
+
+  })
+
+$('#loginModal form').form({
+  on: 'change',
+  fields: {
+    username: {
+      identifier: 'username',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    password: {
+      identifier: 'password',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    }
+  }
+});
+
 
 
 
@@ -136,25 +209,6 @@ let user = {
     }
     let user = localStorage.getItem('user_data').split(',')
     return this.checkDB(user[0],user[1])
-  },
-
-  // validates user on login page
-  validateUser () {
-      let username = $('#username').val().trim()
-      let password = $('#password').val().trim()
-      db.ref('/user/' + username).once('value', function(snapshot){
-          if(snapshot.val()){                
-              if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password}`)
-                  console.log("Logging in, valid username and password")
-              }else{
-                  console.log("CheckDB: password doesnt match")
-                  alert("Password is incorrect")
-              }
-          }else{
-              alert("Username is not found")
-          }
-      })
   },
   // checks db to see if user exists, if so return true, else false
   checkDB (username, password) {
