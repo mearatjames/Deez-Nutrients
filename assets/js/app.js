@@ -204,10 +204,7 @@ let nutrients = {
   },
   // gets all user items
   getUserItems(){
-    if(!user.authUser){
-      return false
-    }
-    let str = localStorage.getItem('user_data').split(',').trim()
+    let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
     var user_item = []
     itemRef.on("value", function(snapshot) {
