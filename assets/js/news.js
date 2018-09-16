@@ -132,6 +132,11 @@ function read(response) {
             <div class="ui vertical left aligned segment">
             <div>${content.Contents}</div>
             </div>
+            <div class="sixteen wide column right aligned">
+            <a href="${content.HealthfinderUrl}">
+            <span>Source</span>
+            <img class="ui small right floated image" src="${content.HealthfinderLogo}"></a> 
+            </div>
             `) 
     }
 }
