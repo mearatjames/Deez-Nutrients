@@ -5,7 +5,6 @@ $(document)
       .sidebar('attach events', '.toc.item')
     ;
     $('.main').hide()
-    $('.ui.sticky').sticky({context: '#context'})
 ;
   })
 

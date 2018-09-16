@@ -1,11 +1,15 @@
 $(document)
   .ready(function() {
-    $('.ui.grid').hide()
-    searchNews()
+      $('.news').hide()
   })
+
+$(document).on('click', '.category', function() {
+    var categoryId = $(this).attr('data-id')
+    searchNews(categoryId)
+})
 //Nutrients News API
-let searchNews = function() {
-    let queryURL = "https://healthfinder.gov/FreeContent/Developer/Search.json?api_key=juxvvslophcumodn&CategoryID=16"
+let searchNews = function(categoryId) {
+    let queryURL = "https://healthfinder.gov/FreeContent/Developer/Search.json?api_key=juxvvslophcumodn&CategoryID=" + categoryId
     $.ajax({
       url: queryURL,
       method: "GET"
@@ -17,9 +21,32 @@ let searchNews = function() {
 function display(response) {
     console.log(response.Result)
     for (let i = 0; i < response.Result.Tools.length; i++) {
-    $('img.tools'+ (i+1)).attr('src', response.Result.Tools[i].ImageUrl)
-    $('.header.tools'+ (i+1)).text(response.Result.Tools[i].Title)
-    $('.meta.tools'+ (i+1)).text(response.Result.Tools[i].LastUpdated)
+    $('.newsContent').append(`
+    <div class="sixteen wide tablet six wide computer column">
+        <div class="ui fluid centered card">
+            <div class="content">
+                <img class="ui small fluid right floated image" src="${response.Result.Tools[i].ImageUrl}">
+                <a class="header" href="#">${response.Result.Tools[i].Title}</a>
+                <p>${response.Result.Tools[i].LastUpdated}</p>
+            </div>
+        </div>
+    </div>
+    `)
     }
-    $('.ui.grid').show()
+    for (let i = 0; i < response.Result.Topics.length; i++) {
+        $('.newsContent').append(`
+        <div class="sixteen wide tablet six wide computer column">
+            <div class="ui fluid centered card">
+                <div class="content">
+                    <img class="ui small fluid right floated image" src="${response.Result.Topics[i].ImageUrl}">
+                    <a class="header" href="#">${response.Result.Topics[i].Title}</a>
+                    <p>${response.Result.Topics[i].LastUpdate}</p>
+                </div>
+            </div>
+        </div>
+        `)
+    $('.hideItems').hide()
+    $('.news').show()
+    $('.ui.sticky').sticky({})
+}
 }
