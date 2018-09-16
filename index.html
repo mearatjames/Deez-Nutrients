@@ -15,9 +15,9 @@
 
     <!-- Sidebar Menu -->
     <div class="ui vertical inverted sidebar menu">
-        <a href="index.html" class="active item">Home</a>
-        <a class="item">Nutrients Tracker</a>
-        <a class="item">Nutrients News</a>
+        <a href="index.html" class="item active">Home</a>
+        <a href="tracker.html" class="item">Nutrients Tracker</a>
+        <a href="news.html" class="item">Nutrients News</a>
         <a href="aboutus.html" class="item">About Us</a>
         <a class="item hLogin">Login / Sign Up</a>
     </div>
@@ -29,9 +29,9 @@
                     <a class="toc item">
                         <i class="sidebar icon"></i>
                     </a>
-                    <a href="index.html" class="active item">Home</a>
-                    <a class="item">Nutrients Tracker</a>
-                    <a class="item">Nutrients News</a>
+                    <a href="index.html" class="item active">Home</a>
+                    <a href="tracker.html" class="item">Nutrients Tracker</a>
+                    <a href="news.html" class="item">Nutrients News</a>
                     <a href="aboutus.html" class="item">About Us</a>
                     <div class="right item">
                         <a class="ui inverted hLogin button">Login / Sign Up</a>
@@ -39,7 +39,6 @@
                 </div>
             </div>
         </div>
-
         <main class="ui grid">
             <div class="brand sixteen wide column ui center aligned">
                 <h1>Deez Nutrients</h1>
@@ -66,169 +65,170 @@
                 </div>
             </div>
     </div>
-        <div id="nutritionModal" class="ui longer modal">
+    <div id="nutritionModal" class="ui longer modal">
+        <i class="close icon"></i>
+        <div id="foodName" class="header"></div>
+        <div class="scrolling content">
+            <div class="title">Nutrition Facts</div>
+            <div class="serving">
+                <div class="servingSizeField">
+                    <span class="servingSizeText">Serving Size:</span>
+                    <input type="number" value="" id="servingQty">
+                    <span id="servingUnit"></span>
+                </div>
+                <div>(<span id="servingWeightGrams"></span>g)</div>
+            </div><!-- closing class="serving" -->
+
+            <div class="bar1"></div>
+            <div><strong>Amount Per Serving</strong></div>
+            <div class="line">
+                <div><strong>Calories </strong> <span id="calories">200</span></div>
+                <div>Calories from Fat <span id="fatCal">200</span></div>
+            </div>
+            <div class="bar2"></div>
+            <div class="line2">
+                <div><strong>% Daily Value</strong><span class="star" aria-hidden="true">*</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Total Fat </strong> <span id="totalFat"></span><span>g</span></div>
+                <div><strong id="totalFatPercent">60</strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Saturated Fat <span id="satFat"></span><span>g</span></div>
+                <div><strong id="satFatPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div><i>Trans</i> Fat <span id="transFat"></span><span>g</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Cholesterol </strong> <span id="cholesterol"></span><span>mg</span></div>
+                <div><strong id="cholesterolPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Sodium </strong> <span id="sodium"></span><span>mg</span></div>
+                <div><strong id="sodiumPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Total Carbs </strong> <span id="totalCarbs"></span><span>g</span></div>
+                <div><strong id="totalCarbsPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Dietary Fiber <span id="fiber"></span><span>g</span></div>
+                <div><strong id="fiberPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Sugar <span id="sugar"></span><span>g</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Protein </strong> <span id="protein"></span><span>g</span></div>
+            </div>
+            <div class="bar1"></div>
+            <div class="dvCalorieDiet line">
+                <div class="calorieNote">
+                    <span><span class="star" aria-hidden="true">*</span> Percent Daily Values are based on a 2000 calorie
+                        diet.</span>
+                </div><!-- closing class="calorieNote" -->
+
+            </div><!-- closing class="dvCalorieDiet line" -->
+            <div id="piechart" class="ui card" style="width: 100%"></div>
+        </div>
+
+        <!-- Nutrition Image -->
+        <div class="actions">
+            <div class="ui black deny button right">
+                Cancel
+            </div>
+            <div class="ui positive right labeled icon button">
+                Add
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+
+        <!-- Bunrith modal -->
+        <div id="loginModal" class="ui modal">
             <i class="close icon"></i>
-            <div id="foodName" class="header"></div>
-            <div class="scrolling content">
-                <div class="title">Nutrition Facts</div>
-                <div class="serving">
-                    <div class="servingSizeField">
-                            <span class="servingSizeText">Serving Size:</span>
-                            <input type="number" value="" id="servingQty">
-                            <span id="servingUnit"></span>
-                    </div>
-                        <div>(<span id="servingWeightGrams"></span>g)</div>
-                </div><!-- closing class="serving" -->
-
-                <div class="bar1"></div>
-                <div><strong>Amount Per Serving</strong></div>
-                <div class="line">
-                    <div><strong>Calories </strong> <span id="calories">200</span></div>
-                    <div>Calories from Fat <span id="fatCal">200</span></div>
-                </div>
-                <div class="bar2"></div>
-                <div class="line2">
-                        <div><strong>% Daily Value</strong><span class="star" aria-hidden="true">*</span></div>
-                    </div>
-                <div class="line">
-                    <div><strong>Total Fat </strong> <span id="totalFat"></span><span>g</span></div>
-                    <div><strong id="totalFatPercent">60</strong><span>%</span></div>
-                </div>
-                <div class="line3">
-                    <div>Saturated Fat <span id="satFat"></span><span>g</span></div>
-                    <div><strong id="satFatPercent"></strong><span>%</span></div>
-                </div>
-                <div class="line3">
-                    <div><i>Trans</i> Fat <span id="transFat"></span><span>g</span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Cholesterol </strong> <span id="cholesterol"></span><span>mg</span></div>
-                    <div><strong id="cholesterolPercent"></strong><span>%</span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Sodium </strong> <span id="sodium"></span><span>mg</span></div>
-                    <div><strong id="sodiumPercent"></strong><span>%</span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Total Carbs </strong> <span id="totalCarbs"></span><span>g</span></div>
-                    <div><strong id="totalCarbsPercent"></strong><span>%</span></div>
-                </div>
-                <div class="line3">
-                    <div>Dietary Fiber <span id="fiber"></span><span>g</span></div>
-                    <div><strong id="fiberPercent"></strong><span>%</span></div>
-                </div>
-                <div class="line3">
-                    <div>Sugar <span id="sugar"></span><span>g</span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Protein </strong> <span id="protein"></span><span>g</span></div>
-                </div>
-                <div class="bar1"></div>
-                <div class="dvCalorieDiet line">
-                    <div class="calorieNote">
-                        <span><span class="star" aria-hidden="true">*</span> Percent Daily Values are based
-                            on a 2000 calorie diet.</span>
-                    </div><!-- closing class="calorieNote" -->
-
-                </div><!-- closing class="dvCalorieDiet line" -->
-                <div id="piechart" class="ui card" style="width: 100%"></div> 
+            <div class="header">
+                Login or Sign Up
             </div>
-
-            <!-- Nutrition Image -->
+            <div class="content">
+                <div class="ui large header">Login</div>
+                <p>Login using your username and password</p>
+                <form id="form1" class="ui large form error">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" id="username" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="ui right algined inline field">
+                        <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
+                    </div>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+            <div class="ui divider"></div>
+            <div class="content">
+                <div class="ui large left header">Register</div>
+                <p>Sign Up Below!</p>
+                <form id="form2" class="ui large form error">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="rusername" id="rusername" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="rpassword" id="rpassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="rname" id="rname" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="ui left inline field">
+                        <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
+                    </div>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
             <div class="actions">
-                <div class="ui black deny button right">
-                    Cancel
-                </div>
-                <div class="ui positive right labeled icon button">
-                    Add
-                    <i class="checkmark icon"></i>
-                </div>
-            </div>
-
-            <!-- Bunrith modal -->
-            <div id="loginModal" class="ui modal">
-                    <i class="close icon"></i>
-                    <div class="header">
-                        Login or Sign Up
-                    </div>
-                    <div class="content">
-                            <div class="ui large header">Login</div>
-                            <p>Login using your username and password</p>
-                            <form id="form1" class="ui large form error">
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                        <i class="user icon"></i>
-                                        <input type="text" name="username" id="username" placeholder="Username">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input type="password" name="password" id="password" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="ui right algined inline field">
-                                        <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
-                                </div>
-                                <div class="ui error message"></div>
-                            </form>
-                    </div>
-                    <div class="ui divider"></div>
-                    <div class="content">
-                            <div class="ui large left header">Register</div>
-                            <p>Sign Up Below!</p>
-                            <form id="form2" class="ui large form error">
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                        <i class="user icon"></i>
-                                        <input type="text" name="rusername" id="rusername" placeholder="Username">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input type="password" name="rpassword" id="rpassword" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                        <div class="ui left icon input">
-                                        <i class="user icon"></i>
-                                        <input type="text" name="rname" id="rname" placeholder="Name">
-                                        </div>
-                                    </div>
-                                <div class="ui left inline field">
-                                        <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
-                                </div>
-                                <div class="ui error message"></div>
-                            </form>
-                    </div>
-                    <div class="actions">
-                        <!-- <div class="ui basic button" id="register">
+                <!-- <div class="ui basic button" id="register">
                             Sign Up
                         </div> -->
-                     </div>
-                </div>
-
-                <div id="logoutModal" class="ui basic modal">
-                    <div class="ui icon header">
-                        <i class="archive icon"></i>
-                        <a class="logoutModalHeader">Logging Out?</a>
-                    </div>
-                    <div class="content center">
-                        <p>By Clicking on Yes, You will be logged out and will be required to login to access specific parts of the site.</p>
-                    </div>
-                    <div class="actions">
-                        <div class="ui red basic cancel inverted button">
-                        <i class="remove icon"></i>
-                        No
-                        </div>
-                        <div class="ui green ok inverted button" onclick="user.logout()">
-                        <i class="checkmark icon"></i>
-                        Yes
-                        </div>
-                    </div>
-                </div>  
+            </div>
         </div>
+
+        <div id="logoutModal" class="ui basic modal">
+            <div class="ui icon header">
+                <i class="archive icon"></i>
+                <a class="logoutModalHeader">Logging Out?</a>
+            </div>
+            <div class="content center">
+                <p>By Clicking on Yes, You will be logged out and will be required to login to access specific parts of the
+                    site.</p>
+            </div>
+            <div class="actions">
+                <div class="ui red basic cancel inverted button">
+                    <i class="remove icon"></i>
+                    No
+                </div>
+                <div class="ui green ok inverted button" onclick="user.logout()">
+                    <i class="checkmark icon"></i>
+                    Yes
+                </div>
+            </div>
+        </div>
+    </div>
     </main>
 
     </div>
