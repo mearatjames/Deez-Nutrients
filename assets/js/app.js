@@ -16,10 +16,151 @@ $(document).on('click', '.food .item', function() {
   .modal('toggle');
 })
 
-$(document).on('click', '#hLogin', function() {
+
+//login modal
+$(document).on('click', '.hLogin', function() {
   $('#loginModal')
   .modal('toggle');
 })
+
+
+//logout modal
+$(document).on('click', '.hLogout', function() {
+  let str = localStorage.getItem('user_data').split(',')
+  $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
+  $('#logoutModal')
+  .modal('toggle');
+})
+
+$(document).on('click', '#login', function() {
+  let username = $('#username').val().trim()
+  let password = $('#password').val().trim()
+  $('#form1 .message').empty()
+
+  if(!username){
+    $('#loginModal #form1').form('add errors', {
+      email: 'Username field is empty',
+    })
+  }else{
+      db.ref('/user/' + username).once('value', function(snapshot){
+          if(snapshot.val()){ 
+            if(!password){
+              console.log('here2')
+              $('#loginModal #form1').form('add errors', {
+                email: 'Password field is empty',
+              })
+            }else{
+              if(snapshot.val().password === password){
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  $('#loginModal ').modal('hide');
+                  user.login()
+              }else{
+                $('#loginModal #form1').form('add errors', {
+                  email: 'Password is incorrect',
+                })
+              }
+            }
+          }else{
+            $('#loginModal #form1').form('add errors', {
+              email: 'Username does not exist',
+            })
+          }
+      })
+    }
+})
+
+$('#loginModal #form1').form({
+  on: 'change',
+  fields: {
+    username: {
+      identifier: 'username',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    password: {
+      identifier: 'password',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    }
+  }
+})
+
+$('#loginModal #form2').form({
+  on: 'change',
+  fields: {
+    rusername: {
+      identifier: 'rusername',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    rpassword: {
+      identifier: 'rpassword',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    },
+    name: {
+      identifier: 'rname',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Name can not be empty'
+        }
+      ]
+    }
+  }
+})
+
+$(document).on('click', '#register', function() {
+  let username = $('#rusername').val().trim()
+  let password = $('#rpassword').val().trim()
+  let name = $('#rname').val().trim()
+  $('#form2 .message').empty()
+
+  userRef.once('value', function(snapshot) {
+      let issues = 0
+      let issuekp = {}
+      if(!username){
+        issuekp.uname1 = 'Username field is empty'
+        issues++
+      }else if(snapshot.hasChild(username)) {
+        issuekp.uname2 = `Username "${username}" is already taken.`
+        issues++
+      }
+      if(!password){
+        issuekp.pwd1 = 'Password field is empty'
+        issues++
+      }
+      if(!name){
+        issuekp.name1 = 'Name field is empty'
+        issues++
+      }
+      if(issues > 0){
+        $('#loginModal #form2').form('add errors', issuekp)
+      }else{
+        localStorage.setItem('user_data', `${username},${password},${name}`)
+        $('#loginModal ').modal('hide')
+        user.addUser(username, password, name)
+        user.login()
+      }
+  })
+})
+
 
 //Nutritients Search Eventlistener
 $(document).on('click', 'div.nutritionSearch', function() {
@@ -69,8 +210,8 @@ databaseURL: "https://vitamind-b6c3c.firebaseio.com",
 projectId: "vitamind-b6c3c",
 storageBucket: "vitamind-b6c3c.appspot.com",
 messagingSenderId: "870980303877"
-};
-firebase.initializeApp(config);
+}
+firebase.initializeApp(config)
 
 const db = firebase.database()
 const userRef = db.ref('user')
@@ -174,7 +315,7 @@ let nutObj = {
                     <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
                 </div>
             </div>
-            `);
+            `)
             $('#brandedFoods').append(`
             <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
@@ -189,10 +330,34 @@ let nutObj = {
 }
 
 let user = {
+  login () {
+    $('.hLogin').html('Logout')
+    $('.hLogin').addClass('hLogout')
+    $('.hLogin').removeClass('hLogin')
+
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogout')
+    $('.pushable a').eq(4).removeClass('hLogin')
+    $('.pushable a').eq(4).html('Logout')
+  },
+  logout () {
+    $('.hLogout').html('Login / Sign Up')
+    $('.hLogout').addClass('hLogin')
+    $('.hLogout').removeClass('hLogout')
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogin')
+    $('.pushable a').eq(4).removeClass('hLogout')
+    $('.pushable a').eq(4).html('Login / Sign Up')
+    localStorage.setItem('user_data', ``)
+  },
   addUser (uname, pwd, n) {
       userRef.once('value', function(snapshot) {
           if (snapshot.hasChild(uname)) {
-            alert('your user name exists. this alert needs to be refactored into on page textbox validation');
+            alert('your user name exists. this alert needs to be refactored into on page textbox validation')
           }else{
               userRef.child(uname).set({
                   password: pwd,
@@ -204,29 +369,12 @@ let user = {
   // checks local storage for a user and password str = 'user,pwd'
   authUser () {
     if(!localStorage.getItem('user_data')) {
+      $('.pushable a').eq(4).addClass('hLogin')
+      console.log("GHELFWFL")
       return false
     }
     let user = localStorage.getItem('user_data').split(',')
-    return this.checkDB(user[0],user[1])
-  },
-
-  // validates user on login page
-  validateUser () {
-      let username = $('#username').val().trim()
-      let password = $('#password').val().trim()
-      db.ref('/user/' + username).once('value', function(snapshot){
-          if(snapshot.val()){                
-              if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password}`)
-                  console.log("Logging in, valid username and password")
-              }else{
-                  console.log("CheckDB: password doesnt match")
-                  alert("Password is incorrect")
-              }
-          }else{
-              alert("Username is not found")
-          }
-      })
+    this.checkDB(user[0],user[1])
   },
   // checks db to see if user exists, if so return true, else false
   checkDB (username, password) {
@@ -234,13 +382,17 @@ let user = {
           if(snapshot.val()){                
               if(snapshot.val().password === password){
                   console.log("CheckDB: password matches")
+                  $('.pushable a').eq(4).addClass('hLogout')
+                  user.login()
                   return true
               }else{
                   console.log("CheckDB: password doesnt match")
+                  $('.pushable a').eq(4).addClass('hLogin')
                   return false
               }
           }else{
               alert("FATAL: user does not exist, cannot verify")
+              $('.pushable a').eq(4).addClass('hLogin')
           }
       })
   },
@@ -250,7 +402,6 @@ let user = {
       let str = localStorage.getItem('user_data').split(',')
       console.log('str[0] is ' + str[0])
       db.ref('/user/' + str[0]).once('value', function(snapshot){
-          console.log(str[0])
           if(snapshot.val().name === str[2]){
               return snapshot.val().name
           }
@@ -268,7 +419,7 @@ let fb = {
   getItem(item_id){
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
+        var childData = childSnapshot.val()
         if(childData.id === item_id){
           return childData
         }
@@ -276,24 +427,37 @@ let fb = {
     })
   },
   // gets all user items
-  getUserItems(){
+  getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
     var user_item = []
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
+        var childData = childSnapshot.val()
         if(childData.username === username){
-          user_item.push(childData.name)
+          //if date doesnt exist we push everything for that logged in user, 
+          //else we push specified date
+          if(!d){
+            user_item.push(childData.name)
+          }else if(childData.date === d){
+            user_item.push(childData.name)
+          }
         }
       })
     })
     return user_item
   },
   addItem(itemname){
+      var today = moment().format("MM/DD/YYYY")
       itemRef.push({
+          date: today,
           username: user.getUser(),
           name: itemname
       })
   }
 }
+
+//always run to determine if user is logged in on every page
+$( document ).ready(function() {
+  user.authUser()
+})
