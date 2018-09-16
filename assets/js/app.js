@@ -5,9 +5,8 @@ $(document)
       .sidebar('attach events', '.toc.item')
     ;
     $('.main').hide()
-
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    $('.ui.sticky').sticky({context: '#context'})
+;
   })
 
 //Toggle Modal
@@ -185,7 +184,8 @@ function search() {
 }
 //Draw Chart
 function drawChart(proteinCal, carbsCal, fatCal) {
-
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
         var data = google.visualization.arrayToDataTable([
           ['Source', 'Percentage'],
           ['Protein',  proteinCal],
@@ -326,7 +326,9 @@ let nutObj = {
             `)
             }
         })
-    }
+    },
+
+    //
 }
 
 let user = {

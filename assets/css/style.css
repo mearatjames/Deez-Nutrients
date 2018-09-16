@@ -1,3 +1,14 @@
+.topics {
+    margin: 50px 0px 40px 0px;
+}
+
+
+.news {
+    min-width: 100vw;
+    background-color: red;
+    min-height: 100vh;
+}
+
 .brand {
   padding: 20px;
   margin: 100px 0px 80px 0px;
