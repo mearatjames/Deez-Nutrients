@@ -32,12 +32,12 @@ $(document).on('click', '.hLogout', function() {
 $(document).on('click', '#login', function() {
   let username = $('#username').val().trim()
   let password = $('#password').val().trim()
-  $('#form1 .message').empty();
+  $('#form1 .message').empty()
 
   if(!username){
     $('#loginModal #form1').form('add errors', {
       email: 'Username field is empty',
-    });
+    })
   }else{
       db.ref('/user/' + username).once('value', function(snapshot){
           if(snapshot.val()){ 
@@ -45,7 +45,7 @@ $(document).on('click', '#login', function() {
               console.log('here2')
               $('#loginModal #form1').form('add errors', {
                 email: 'Password field is empty',
-              });
+              })
             }else{
               if(snapshot.val().password === password){
                   localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
@@ -54,13 +54,13 @@ $(document).on('click', '#login', function() {
               }else{
                 $('#loginModal #form1').form('add errors', {
                   email: 'Password is incorrect',
-                });
+                })
               }
             }
           }else{
             $('#loginModal #form1').form('add errors', {
               email: 'Username does not exist',
-            });
+            })
           }
       })
     }
@@ -88,7 +88,7 @@ $('#loginModal #form1').form({
       ]
     }
   }
-});
+})
 
 $('#loginModal #form2').form({
   on: 'change',
@@ -121,13 +121,13 @@ $('#loginModal #form2').form({
       ]
     }
   }
-});
+})
 
 $(document).on('click', '#register', function() {
   let username = $('#rusername').val().trim()
   let password = $('#rpassword').val().trim()
   let name = $('#rname').val().trim()
-  $('#form2 .message').empty();
+  $('#form2 .message').empty()
 
   userRef.once('value', function(snapshot) {
       let issues = 0
@@ -148,10 +148,10 @@ $(document).on('click', '#register', function() {
         issues++
       }
       if(issues > 0){
-        $('#loginModal #form2').form('add errors', issuekp);
+        $('#loginModal #form2').form('add errors', issuekp)
       }else{
         localStorage.setItem('user_data', `${username},${password},${name}`)
-        $('#loginModal ').modal('hide');
+        $('#loginModal ').modal('hide')
         user.addUser(username, password, name)
         user.login()
       }
@@ -189,8 +189,8 @@ databaseURL: "https://vitamind-b6c3c.firebaseio.com",
 projectId: "vitamind-b6c3c",
 storageBucket: "vitamind-b6c3c.appspot.com",
 messagingSenderId: "870980303877"
-};
-firebase.initializeApp(config);
+}
+firebase.initializeApp(config)
 
 const db = firebase.database()
 const userRef = db.ref('user')
@@ -246,7 +246,7 @@ let nutObj = {
                     <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
                 </div>
             </div>
-            `);
+            `)
             $('#brandedFoods').append(`
             <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
@@ -265,17 +265,30 @@ let user = {
     $('.hLogin').html('Logout')
     $('.hLogin').addClass('hLogout')
     $('.hLogin').removeClass('hLogin')
+
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogout')
+    $('.pushable a').eq(4).removeClass('hLogin')
+    $('.pushable a').eq(4).html('Logout')
   },
   logout () {
     $('.hLogout').html('Login / Sign Up')
     $('.hLogout').addClass('hLogin')
     $('.hLogout').removeClass('hLogout')
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogin')
+    $('.pushable a').eq(4).removeClass('hLogout')
+    $('.pushable a').eq(4).html('Login / Sign Up')
     localStorage.setItem('user_data', ``)
   },
   addUser (uname, pwd, n) {
       userRef.once('value', function(snapshot) {
           if (snapshot.hasChild(uname)) {
-            alert('your user name exists. this alert needs to be refactored into on page textbox validation');
+            alert('your user name exists. this alert needs to be refactored into on page textbox validation')
           }else{
               userRef.child(uname).set({
                   password: pwd,
@@ -287,6 +300,8 @@ let user = {
   // checks local storage for a user and password str = 'user,pwd'
   authUser () {
     if(!localStorage.getItem('user_data')) {
+      $('.pushable a').eq(4).addClass('hLogin')
+      console.log("GHELFWFL")
       return false
     }
     let user = localStorage.getItem('user_data').split(',')
@@ -298,14 +313,17 @@ let user = {
           if(snapshot.val()){                
               if(snapshot.val().password === password){
                   console.log("CheckDB: password matches")
+                  $('.pushable a').eq(4).addClass('hLogout')
                   user.login()
                   return true
               }else{
                   console.log("CheckDB: password doesnt match")
+                  $('.pushable a').eq(4).addClass('hLogin')
                   return false
               }
           }else{
               alert("FATAL: user does not exist, cannot verify")
+              $('.pushable a').eq(4).addClass('hLogin')
           }
       })
   },
@@ -332,7 +350,7 @@ let fb = {
   getItem(item_id){
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
+        var childData = childSnapshot.val()
         if(childData.id === item_id){
           return childData
         }
@@ -346,7 +364,7 @@ let fb = {
     var user_item = []
     itemRef.on("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
+        var childData = childSnapshot.val()
         if(childData.username === username){
           //if date doesnt exist we push everything for that logged in user, 
           //else we push specified date
@@ -370,4 +388,7 @@ let fb = {
   }
 }
 
-user.authUser()
+//always run to determine if user is logged in on every page
+$( document ).ready(function() {
+  user.authUser()
+})
