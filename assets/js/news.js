@@ -111,6 +111,13 @@ function read(response) {
             <div>${element.Content}</div>
             </div>`)
         });
+        $('.newsContent').append(`
+        <div class="sixteen wide column right aligned">
+        <a href="${content.HealthfinderUrl}">
+        <span>Source</span>
+        <img class="ui small right floated image" src="${content.HealthfinderLogo}"></a> 
+        </div>
+        `)
     } else {
         let content = response.Result.Tools
         console.log(content)
