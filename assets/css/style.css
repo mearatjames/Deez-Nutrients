@@ -1,3 +1,4 @@
+
 .brand {
   padding: 20px;
   margin: 100px 0px 80px 0px;
@@ -40,6 +41,23 @@
 .line{
     border-top: 1px solid black;
     padding: 1px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line2{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.line3{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .nutritionLabel{
@@ -73,4 +91,6 @@
       display: block;
     }
   }
-
+.hide {
+    display: none;
+}
