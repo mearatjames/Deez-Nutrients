@@ -217,8 +217,6 @@ const db = firebase.database()
 const userRef = db.ref('user')
 const itemRef = db.ref('item')
 
-    
-
 let nutObj = {
     // retrieves a singular item from the nutrionix api
     getItem (str) {
