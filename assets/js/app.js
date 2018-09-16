@@ -5,9 +5,7 @@ $(document)
       .sidebar('attach events', '.toc.item')
     ;
     $('.main').hide()
-
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+;
   })
 
 //Toggle Modal
@@ -166,6 +164,8 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
 })
 
 //Search List Eventlistener
@@ -185,7 +185,6 @@ function search() {
 }
 //Draw Chart
 function drawChart(proteinCal, carbsCal, fatCal) {
-
         var data = google.visualization.arrayToDataTable([
           ['Source', 'Percentage'],
           ['Protein',  proteinCal],
@@ -216,8 +215,6 @@ firebase.initializeApp(config)
 const db = firebase.database()
 const userRef = db.ref('user')
 const itemRef = db.ref('item')
-
-    
 
 let nutObj = {
     // retrieves a singular item from the nutrionix api
@@ -326,7 +323,9 @@ let nutObj = {
             `)
             }
         })
-    }
+    },
+
+    //
 }
 
 let user = {
