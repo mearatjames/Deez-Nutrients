@@ -164,9 +164,42 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
+  //google.charts.load('current', {'packages':['corechart']});
+  //google.charts.setOnLoadCallback(drawChart);
 })
+
+//Nutritients Search Item Modal Eventlistener
+$(document).on('keyup', '#servingQty', function() {
+  console.log('here0' + $('#servingQty').val())
+  if($('#servingQty').val()){
+    console.log('here ' + $('#servingQty').val())
+    nutObj.getItem($('#foodName').text(), $('#servingQty').val())
+  }else{
+    $('#servingQty').attr('value', '')
+    $('#servingUnit').text('')
+    $('#servingWeightGrams').text('')
+    $('#calories').text('')
+    $('#fatCal').text('')
+    $('#totalFat').text('')
+    $('#totalFatPercent').text('')
+    $('#satFat').text('')
+    $('#satFatPercent').text('')
+    $('#transFat').text('')
+    $('#cholesterol').text('')
+    $('#cholesterolPercent').text('')
+    $('#sodium').text('')
+    $('#sodiumPercent').text('')
+    $('#totalCarbs').text('')
+    $('#totalCarbsPercent').text('')
+    $('#fiber').text('')
+    $('#fiberPercent').text('')
+    $('#sugar').text('')
+    $('#protein').text('')
+  }
+  //google.charts.load('current', {'packages':['corechart']});
+  //google.charts.setOnLoadCallback(drawChart);
+})
+
 
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
@@ -218,7 +251,10 @@ const itemRef = db.ref('item')
 
 let nutObj = {
     // retrieves a singular item from the nutrionix api
-    getItem (str) {
+    getItem (str, size) {
+        if (!size){
+          size = 1
+        }
         var settings = {
             url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
             method: 'POST',
@@ -230,9 +266,10 @@ let nutObj = {
                 'x-remote-user-id': '1'
             },
             processData: false,
-            data: '{"query":"' + str + '"}'
-            }
-
+            data: `{
+              "query": "${size} ${str}"
+            }`
+        }
         $.ajax(settings).done(function (response) {
             console.log(response)
             let foodName = response.foods[0].food_name
@@ -283,7 +320,7 @@ let nutObj = {
             $('#sugar').text(sugar)
             $('#protein').text(protein)
 
-            drawChart(proteinCal, carbsCal, fatCal)
+            //drawChart(proteinCal, carbsCal, fatCal)
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -460,3 +497,5 @@ let fb = {
 $( document ).ready(function() {
   user.authUser()
 })
+
+console.log(nutObj.getItem('hamburger'))
