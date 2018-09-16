@@ -2,7 +2,6 @@ $(document)
   .ready(function() {
     $('.ui.grid').hide()
     searchNews()
-;
   })
 //Nutrients News API
 let searchNews = function() {
@@ -17,8 +16,10 @@ let searchNews = function() {
 
 function display(response) {
     console.log(response.Result)
-    $('img.tools1').attr('src', response.Result.Tools[0].ImageUrl)
-    $('.tools1.header').text(response.Result.Tools[0].Title)
-    $('.meta.tools1').text(response.Result.Tools[0].LastUpdated)
+    for (let i = 0; i < response.Result.Tools.length; i++) {
+    $('img.tools'+ (i+1)).attr('src', response.Result.Tools[i].ImageUrl)
+    $('.header.tools'+ (i+1)).text(response.Result.Tools[i].Title)
+    $('.meta.tools'+ (i+1)).text(response.Result.Tools[i].LastUpdated)
+    }
     $('.ui.grid').show()
 }
