@@ -5,6 +5,9 @@ $(document)
       .sidebar('attach events', '.toc.item')
     ;
     $('.main').hide()
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
   })
 
 //Toggle Modal
@@ -20,13 +23,14 @@ $(document).on('click', '#hLogin', function() {
 
 //Nutritients Search Eventlistener
 $(document).on('click', 'div.nutritionSearch', function() {
-  console.log("Clicked!")
+  let str = ($(this).find('a.header').text())
+  nutObj.getItem(str)
 })
 
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
   $('.brand').animate({
-    margin: "20px 0px 10px 0px"
+    margin: "20px 0px 20px 0px"
   }, 1000)
 })
 $(document).on('keyup', '#search', search)
@@ -38,7 +42,24 @@ function search() {
   console.log(str)
   nutObj.getItemList(str)
 }
+//Draw Chart
+function drawChart(proteinCal, carbsCal, fatCal) {
 
+        var data = google.visualization.arrayToDataTable([
+          ['Source', 'Percentage'],
+          ['Protein',  proteinCal],
+          ['Carbs',  carbsCal],
+          ['Fat',  fatCal],
+        ]);
+
+        var options = {
+          title: 'Source of Calories',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+}
 // Initialize Firebase
 
 var config = {
@@ -71,12 +92,60 @@ let nutObj = {
                 'x-remote-user-id': '1'
             },
             processData: false,
-            data: '{"query":"hamburger"}'
+            data: '{"query":"' + str + '"}'
             }
 
         $.ajax(settings).done(function (response) {
             console.log(response)
-            return response
+            let foodName = response.foods[0].food_name
+            let protein = Math.round(response.foods[0].nf_protein)
+            let totalFat = Math.round(response.foods[0].nf_total_fat)
+            let totalCarbs = Math.round(response.foods[0].nf_total_carbohydrate)
+            let sodium = Math.round(response.foods[0].nf_sodium)
+            let sugar = Math.round(response.foods[0].nf_sugars)
+            let cholesterol = Math.round(response.foods[0].nf_cholesterol)
+            let calories = Math.round(response.foods[0].nf_calories)
+            let fiber = Math.round(response.foods[0].nf_dietary_fiber)
+            let satFat = Math.round(response.foods[0].nf_saturated_fat)
+            let transFat
+            function attr_id() {
+                for (let i = 0; i < response.foods[0].full_nutrients.length; i++) {
+                    if (response.foods[0].full_nutrients[i].attr_id == 605) {
+                        transFat = Math.round(response.foods[0].full_nutrients[i].value)
+                        return transFat
+                    } else {
+                        return transFat = 0
+                    }
+                }
+            }
+            attr_id()
+            let proteinCal = protein * 4
+            let fatCal = totalFat * 9
+            let carbsCal = totalCarbs * 4
+            
+            $('#foodName').text(foodName.charAt(0).toUpperCase() + foodName.slice(1))
+            $('#servingQty').attr('value', response.foods[0].serving_qty)
+            $('#servingUnit').text(response.foods[0].serving_unit)
+            $('#servingWeightGrams').text(response.foods[0].serving_weight_grams)
+            $('#calories').text(calories)
+            $('#fatCal').text(fatCal)
+            $('#totalFat').text(totalFat)
+            $('#totalFatPercent').text(Math.round((totalFat / 65)*100))
+            $('#satFat').text(satFat)
+            $('#satFatPercent').text(Math.round((satFat / 20)*100))
+            $('#transFat').text(transFat)
+            $('#cholesterol').text(cholesterol)
+            $('#cholesterolPercent').text(Math.round((cholesterol / 300)*100))
+            $('#sodium').text(sodium)
+            $('#sodiumPercent').text(Math.round((sodium / 2400)*100))
+            $('#totalCarbs').text(totalCarbs)
+            $('#totalCarbsPercent').text(Math.round((totalCarbs / 300)*100))
+            $('#fiber').text(fiber)
+            $('#fiberPercent').text(Math.round((fiber / 25)*100))
+            $('#sugar').text(sugar)
+            $('#protein').text(protein)
+
+            drawChart(proteinCal, carbsCal, fatCal)
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api

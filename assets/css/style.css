@@ -40,6 +40,23 @@
 .line{
     border-top: 1px solid black;
     padding: 1px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line2{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.line3{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .nutritionLabel{
