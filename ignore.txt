@@ -1,1 +1,21 @@
 ignore this file
+
+
+"pull from master to have updated code"
+git checkout master
+git pull
+
+"getting your branch up-to-date"
+git checkout bun2
+git pull master
+
+"making changes on your branch"
+** make changes **
+git add -A
+git commit -am "making some changes on my branch"
+git push //pushing changes onto bun2
+
+"pushing back up to master"
+git checkout master
+git merge bun2 //merging bun2 branch into master
+git push //pushing changes onto master
