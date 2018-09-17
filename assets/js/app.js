@@ -490,7 +490,7 @@ let user = {
 }
 
 let fb = {
-  // gets all user items
+  // gets all user items; d is in the format: "YYYY/MM/DD A hh:mm"
   getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
