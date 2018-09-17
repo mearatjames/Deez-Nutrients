@@ -15,10 +15,30 @@ $(document).on('click', '.food .item', function() {
 })
 
 
+$(document).on('click','#adduserItem', function() {
+  $('.nutError').remove()
+  if($('#foodName').text() === ''){
+    ('#nutritionModal .actions').append(`
+        <div class="ui error message nutError">An Error has occured, please close this modal and retry.</div>
+      `)
+  }else{
+    if($('#addUserItem').hasClass('red')){
+      $('#loginModal').modal('show')
+    }else{
+      if($('#servingQty').val()){
+        fb.addItem(`${$('#servingQty').val()} ${$('#foodName').text()}`)
+      }else{
+        $('#nutritionModal .actions').append(`
+          <div class="ui error message nutError">Serving Size input is required.</div>
+        `)
+      }
+    }
+  }
+})
+
 //login modal
 $(document).on('click', '.hLogin', function() {
-  $('#loginModal')
-  .modal('toggle');
+  $('#loginModal').modal('toggle')
 })
 
 
@@ -26,8 +46,7 @@ $(document).on('click', '.hLogin', function() {
 $(document).on('click', '.hLogout', function() {
   let str = localStorage.getItem('user_data').split(',')
   $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
-  $('#logoutModal')
-  .modal('toggle');
+  $('#logoutModal').modal('toggle')
 })
 
 $(document).on('click', '#login', function() {
@@ -43,12 +62,12 @@ $(document).on('click', '#login', function() {
       db.ref('/user/' + username).once('value', function(snapshot){
           if(snapshot.val()){ 
             if(!password){
-              console.log('here2')
               $('#loginModal #form1').form('add errors', {
                 email: 'Password field is empty',
               })
             }else{
               if(snapshot.val().password === password){
+                  console.log("HERFAEWF")
                   localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
                   $('#loginModal ').modal('hide');
                   user.login()
@@ -170,9 +189,7 @@ $(document).on('click', 'div.nutritionSearch', function() {
 
 //Nutritients Search Item Modal Eventlistener
 $(document).on('keyup', '#servingQty', function() {
-  console.log('here0' + $('#servingQty').val())
   if($('#servingQty').val()){
-    console.log('here ' + $('#servingQty').val())
     nutObj.getItem($('#foodName').text(), $('#servingQty').val())
   }else{
     $('#servingQty').attr('value', '')
@@ -213,7 +230,6 @@ $(document).on('keyup', '#search', search)
 function search() {
   $('.main').show()
   let str = $(this).val().trim()
-  console.log(str)
   nutObj.getItemList(str)
 }
 //Draw Chart
@@ -271,7 +287,6 @@ let nutObj = {
             }`
         }
         $.ajax(settings).done(function (response) {
-            console.log(response)
             let foodName = response.foods[0].food_name
             let protein = Math.round(response.foods[0].nf_protein)
             let totalFat = Math.round(response.foods[0].nf_total_fat)
@@ -377,6 +392,11 @@ let user = {
     $('.pushable a').eq(4).addClass('hLogout')
     $('.pushable a').eq(4).removeClass('hLogin')
     $('.pushable a').eq(4).html('Logout')
+
+    $('#adduserItem').removeClass('red')
+    $('#adduserItem').addClass('green')
+    $('#adduserItem').html(`Add
+    <i class="checkmark icon"></i>`)
   },
   logout () {
     $('.hLogout').html('Login / Sign Up')
@@ -388,6 +408,12 @@ let user = {
     $('.pushable a').eq(4).addClass('hLogin')
     $('.pushable a').eq(4).removeClass('hLogout')
     $('.pushable a').eq(4).html('Login / Sign Up')
+
+    $('#adduserItem').addClass('red')
+    $('#adduserItem').removeClass('green')
+    $('#adduserItem').html(`Login to Add to Your Tracker
+    <i class="user icon"></i>`)
+
     localStorage.setItem('user_data', ``)
   },
   addUser (uname, pwd, n) {
@@ -406,11 +432,12 @@ let user = {
   authUser () {
     if(!localStorage.getItem('user_data')) {
       $('.pushable a').eq(4).addClass('hLogin')
-      console.log("GHELFWFL")
+      user.logout()
       return false
+    }else{
+      let user = localStorage.getItem('user_data').split(',')
+      this.checkDB(user[0],user[1])
     }
-    let user = localStorage.getItem('user_data').split(',')
-    this.checkDB(user[0],user[1])
   },
   // checks db to see if user exists, if so return true, else false
   checkDB (username, password) {
@@ -424,10 +451,12 @@ let user = {
               }else{
                   console.log("CheckDB: password doesnt match")
                   $('.pushable a').eq(4).addClass('hLogin')
+                  user.logout()
                   return false
               }
           }else{
               alert("FATAL: user does not exist, cannot verify")
+              user.logout()
               $('.pushable a').eq(4).addClass('hLogin')
           }
       })
@@ -484,7 +513,7 @@ let fb = {
     return user_item
   },
   addItem(itemname){
-      var today = moment().format("MM/DD/YYYY")
+      var today = moment().format("MM/DD/YYY hh:mm A")
       itemRef.push({
           date: today,
           username: user.getUser(),
@@ -497,5 +526,3 @@ let fb = {
 $( document ).ready(function() {
   user.authUser()
 })
-
-console.log(nutObj.getItem('hamburger'))
