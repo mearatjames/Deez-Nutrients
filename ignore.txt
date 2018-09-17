@@ -13,7 +13,7 @@ git merge master
 ** make changes **
 git add -A
 git commit -am "making some changes on my branch"
-git push //pushing changes onto bun2
+//git push //do not push, or else it will push to bun2 and u cannot push to master. something weird with how i have bun2 setup; just checkout master and merge
 
 "pushing back up to master"
 git checkout master
