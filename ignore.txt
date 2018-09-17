@@ -22,3 +22,4 @@ git push //pushing changes onto master
 
 git status //to see what changes are on the branch you are in
 //always do a git status to see any staged changes
+//always do a status before every checkout
