@@ -164,8 +164,8 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
-  //google.charts.load('current', {'packages':['corechart']});
-  //google.charts.setOnLoadCallback(drawChart);
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
 })
 
 //Nutritients Search Item Modal Eventlistener
@@ -196,8 +196,6 @@ $(document).on('keyup', '#servingQty', function() {
     $('#sugar').text('')
     $('#protein').text('')
   }
-  //google.charts.load('current', {'packages':['corechart']});
-  //google.charts.setOnLoadCallback(drawChart);
 })
 
 
@@ -320,7 +318,7 @@ let nutObj = {
             $('#sugar').text(sugar)
             $('#protein').text(protein)
 
-            //drawChart(proteinCal, carbsCal, fatCal)
+            drawChart(proteinCal, carbsCal, fatCal)
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -361,8 +359,6 @@ let nutObj = {
             }
         })
     },
-
-    //
 }
 
 let user = {
@@ -497,5 +493,3 @@ let fb = {
 $( document ).ready(function() {
   user.authUser()
 })
-
-console.log(nutObj.getItem('hamburger'))
