@@ -27,21 +27,24 @@ $(document).on('click','#adduserItem', function() {
     }else{
       if($('#servingQty').val()){
         //addItem(
-          // itemname, 
+          // itemname,
+          // serving_unit
           // serving_qty, 
           // calories, 
           // total_fat, 
-          // total_carb, 
+          // total_carbs, 
           // protein
         //)
         fb.addItem(
-          $('#foodName').text(), 
+          $('#foodName').text(),
           $('#servingQty').val(), 
+          $('#servingUnit').text(),
           $('#calories').text(), 
           $('#totalFat').text(),
           $('#totalCarbs').text(),
           $('#protein').text()
         )
+        $('.longer.modal').modal('hide')
       }else{
         $('#nutritionModal .actions').append(`
           <div class="ui error message nutError">Serving Size input is required.</div>
@@ -476,12 +479,8 @@ let user = {
   // get name of user's name by searching db for username
   getName(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log('str[0] is ' + str[0])
-      db.ref('/user/' + str[0]).once('value', function(snapshot){
-          if(snapshot.val().name === str[2]){
-              return snapshot.val().name
-          }
-      })
+      console.log(str[2])
+      return str[2]
   },
   getUser(){
       let str = localStorage.getItem('user_data').split(',')
@@ -512,13 +511,14 @@ let fb = {
     })
     return user_item
   },
-  addItem(itemname, serving_qty, calories, total_fat, total_carbs, protein){
+  addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
       var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
           date: today,
           username: user.getUser(),
           name: itemname,
           servings: serving_qty,
+          serving_unit: serving_unit,
           calories: calories,
           fat: total_fat,
           carbs: total_carbs,
