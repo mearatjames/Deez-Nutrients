@@ -39,7 +39,49 @@
         </div>
       </div>
     </div>
-
+    <div class="ui grid container">
+        <div class="user sixteen wide column">
+            <div class="ui fluid centered card">
+                <div class="content">
+                    <img class="ui tiny fluid left floated image" src="assets/images/steve.jpg">
+                    <h1  class="header">User Name</h1>
+                    <p>Current Calories consumed for today</p>
+                </div>
+            </div>
+        </div>
+        <div id="columnChart" class="ui fluid card">
+        
+        </div>
+        <div class="ui relaxed list">
+            <div class="item">
+              <div class="content">
+                <h3 class="header">Today</h3>
+                <p class="description">1500 total calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+          </div>
+    </div>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
@@ -47,4 +89,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="assets/js/app.js"></script>
+<script>
+  $(document).ready(function() {
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+  })
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Calories Source', 'Protein', 'Carbs', 'Fat', { role: 'annotation' } ],
+    ['Monday', 200, 1000, 400, ''],
+    ['Tuesday', 500, 1200, 600, ''],
+    ['Wednesday', 400, 700,800, ''],
+    ['Thursday', 400, 700,800, ''],
+    ['Friday', 400, 700,800, ''],
+    ['Saturday', 400, 700,800, ''],
+    ['Sunday', 400, 700,800, '']
+  ]);
+
+  var options = {
+    legend: { position: 'top', maxLines: 3 },
+    bar: { groupWidth: '75%' },
+    vAxis: {
+      title: 'Total Calories'
+    },
+    isStacked: true,
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
+  chart.draw(data, options)
+}
+</script>
 </body>
