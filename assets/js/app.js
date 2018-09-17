@@ -26,7 +26,22 @@ $(document).on('click','#adduserItem', function() {
       $('#loginModal').modal('show')
     }else{
       if($('#servingQty').val()){
-        fb.addItem(`${$('#servingQty').val()} ${$('#foodName').text()}`)
+        //addItem(
+          // itemname, 
+          // serving_qty, 
+          // calories, 
+          // total_fat, 
+          // total_carb, 
+          // protein
+        //)
+        fb.addItem(
+          $('#foodName').text(), 
+          $('#servingQty').val(), 
+          $('#calories').text(), 
+          $('#totalFat').text(),
+          $('#totalCarbs').text(),
+          $('#protein').text()
+        )
       }else{
         $('#nutritionModal .actions').append(`
           <div class="ui error message nutError">Serving Size input is required.</div>
@@ -497,12 +512,17 @@ let fb = {
     })
     return user_item
   },
-  addItem(itemname){
+  addItem(itemname, serving_qty, calories, total_fat, total_carbs, protein){
       var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
           date: today,
           username: user.getUser(),
-          name: itemname
+          name: itemname,
+          servings: serving_qty,
+          calories: calories,
+          fat: total_fat,
+          carbs: total_carbs,
+          protein: protein
       })
   }
 }
@@ -511,5 +531,3 @@ let fb = {
 $( document ).ready(function() {
   user.authUser()
 })
-
-//comment to ignore
