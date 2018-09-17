@@ -26,7 +26,6 @@ function display(response) {
         tools(response)
         $('.hideItems').hide()
         $('.news').show()
-        $('.ui.sticky').sticky({})
 }
 
 function topics(response) {
@@ -98,7 +97,7 @@ function read(response) {
             <div class="sixteen wide column">
                     <div class="content">
                         <img class="ui small fluid right floated image" src="${content.ImageUrl}">
-                        <a class="header readNews" href="#">${content.Title}</a>
+                        <h1 class="newsTitle">${content.Title}</h1>
                         <p>${content.LastUpdate}</p>
                     </div>
             </div>
@@ -125,12 +124,17 @@ function read(response) {
             <div class="sixteen wide column">
                     <div class="content">
                         <img class="ui small fluid right floated image" src="${content.ImageUrl}">
-                        <a data-id="ToolID=${content.Id}" class="header readNews" href="#">${content.Title}</a>
+                        <h1 class="newsTitle">${content.Title}</h1>
                         <p>${content.LastUpdated}</p>
                     </div>
             </div>
             <div class="ui vertical left aligned segment">
             <div>${content.Contents}</div>
+            </div>
+            <div class="sixteen wide column right aligned">
+            <a href="${content.HealthfinderUrl}">
+            <span>Source</span>
+            <img class="ui small right floated image" src="${content.HealthfinderLogo}"></a> 
             </div>
             `) 
     }
