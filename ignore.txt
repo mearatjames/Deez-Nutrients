@@ -7,7 +7,7 @@ git pull
 
 "getting your branch up-to-date"
 git checkout bun2
-git pull master
+git merge master
 
 "making changes on your branch"
 ** make changes **
