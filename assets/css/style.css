@@ -1,3 +1,17 @@
+.spacing {
+    margin: 20px 0px;
+}
+
+.health {
+    margin: 20px 0px;
+}
+
+.newsContent {
+    margin: 30px 0px !important;
+}
+.newsTitle {
+    color: darkblue;
+}
 
 .brand {
   padding: 20px;
@@ -90,7 +104,10 @@
     .secondary.pointing.menu .toc.item {
       display: block;
     }
+    #backBtn {
+        position: fixed;
+        z-index: 11;
+        top: 80px;
+    }
   }
-.hide {
-    display: none;
-}
+
