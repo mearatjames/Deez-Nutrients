@@ -19,3 +19,5 @@ git push //pushing changes onto bun2
 git checkout master
 git merge bun2 //merging bun2 branch into master
 git push //pushing changes onto master
+
+git status //to see what changes are on the branch you are ingi
