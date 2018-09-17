@@ -476,32 +476,21 @@ let user = {
 }
 
 let fb = {
-  // gets an item by id
-  getItem(item_id){
-    itemRef.on("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val()
-        if(childData.id === item_id){
-          return childData
-        }
-      })
-    })
-  },
   // gets all user items
   getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
     var user_item = []
-    itemRef.on("value", function(snapshot) {
+    itemRef.orderByChild('date').once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val()
         if(childData.username === username){
           //if date doesnt exist we push everything for that logged in user, 
           //else we push specified date
           if(!d){
-            user_item.push(childData.name)
+            user_item.push(childData)
           }else if(childData.date === d){
-            user_item.push(childData.name)
+            user_item.push(childData)
           }
         }
       })
@@ -509,7 +498,7 @@ let fb = {
     return user_item
   },
   addItem(itemname){
-      var today = moment().format("MM/DD/YYY hh:mm A")
+      var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
           date: today,
           username: user.getUser(),
