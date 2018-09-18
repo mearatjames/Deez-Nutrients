@@ -85,7 +85,6 @@ $(document).on('click', '#login', function() {
               })
             }else{
               if(snapshot.val().password === password){
-                  console.log("HERFAEWF")
                   localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
                   $('#loginModal ').modal('hide');
                   user.login()
