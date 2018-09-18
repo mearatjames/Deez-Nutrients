@@ -250,6 +250,9 @@ function search() {
 //If user login, then display info in tracker.html and draw chart
 function displayTracker() {
   $('#trackerContent').show()
+  let user = localStorage.getItem('user_data').split(',')
+  $('#trackerUser').text(user[2])
+  fb.getUserItems()
     let columnChart = document.getElementById('columnChart')
     if (columnChart) {
     google.charts.load("current", {packages: ["corechart"]});
@@ -551,6 +554,7 @@ let fb = {
         }
       })
     })
+    displayItem(user_item)
     return user_item
   },
   addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
@@ -567,6 +571,11 @@ let fb = {
           protein: protein
       })
   }
+}
+
+//Display Items to tracker
+function displayItem(user_item) {
+  console.log(user_item)
 }
 
 //always run to determine if user is logged in on every page
