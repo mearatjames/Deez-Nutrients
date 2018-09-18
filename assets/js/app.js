@@ -417,7 +417,7 @@ let nutObj = {
             <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.common[i].photo.thumb}">
                 <div class="content">
-                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
+                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name.charAt(0).toUpperCase() + response.common[i].food_name.slice(1)}</a>
                 </div>
             </div>
             `)
@@ -425,7 +425,7 @@ let nutObj = {
             <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
                 <div class="content">
-                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name}</a>
+                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name.charAt(0).toUpperCase() + response.branded[i].brand_name_item_name.slice(1)}</a>
                 </div>
             </div>
             `)

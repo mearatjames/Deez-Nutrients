@@ -19,7 +19,7 @@
 
 .brand {
   padding: 20px;
-  margin: 100px 0px 80px 0px;
+  margin: 60px 0px 60px 0px;
 }
 
 .myTitle{
@@ -96,6 +96,14 @@
   display: none;
 }
 
+.logo {
+    display: none !important;
+}
+
+#logo {
+    width: 18%;
+}
+
 /*Media Query*/
   @media only screen and (max-width: 700px) {
     .ui.fixed.menu {
@@ -112,6 +120,12 @@
         position: fixed;
         z-index: 11;
         top: 80px;
+    }
+    .logo {
+        display: inline-block !important;
+    }
+    #logo {
+        display:none !important;
     }
   }
 
