@@ -248,7 +248,38 @@ function search() {
   let str = $(this).val().trim()
   nutObj.getItemList(str)
 }
-//Draw Chart
+
+//Draw Stacked Column Chart
+let columnChart = document.getElementById('columnChart')
+if (columnChart) {
+  google.charts.load("current", {packages: ["corechart"]});
+  google.charts.setOnLoadCallback(drawColumnChart);
+}
+function drawColumnChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Calories Source', 'Protein', 'Carbs', 'Fat'],
+    ['Mon', 200, 1000, 400],
+    ['Tue', 500, 1200, 600],
+    ['Wed', 400, 700, 800],
+    ['Thu', 300, 650, 500],
+    ['Fri', 100, 900, 200],
+    ['Sat', 432, 1000, 900],
+    ['Sun', 600, 700, 500]
+  ]);
+
+  var options = {
+    legend: { position: 'top', maxLines: 3 },
+    bar: { groupWidth: '75%' },
+    vAxis: {
+      title: 'Total Calories'
+    },
+    isStacked: true,
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
+  chart.draw(data, options)
+}
+
+//Draw Pie Chart
 function drawChart(proteinCal, carbsCal, fatCal) {
         var data = google.visualization.arrayToDataTable([
           ['Source', 'Percentage'],
