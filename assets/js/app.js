@@ -10,7 +10,7 @@ $(document)
 
 //Toggle Modal
 $(document).on('click', '.food .item', function() {
-  $('.longer.modal')
+  $('#nutritionModal')
   .modal('toggle');
 })
 
@@ -458,6 +458,8 @@ let user = {
     $('#adduserItem').removeClass('green')
     $('#adduserItem').html(`Login to Add to Your Tracker
     <i class="user icon"></i>`)
+    $('#loginRequired').modal('show')
+    $('#trackerContent').hide()
 
     localStorage.setItem('user_data', ``)
   },
