@@ -66,100 +66,162 @@
                 </div>
             </div>
     </div>
-        <div id="nutritionModal" class="ui longer modal">
+    <div id="nutritionModal" class="ui longer modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Double Double
+        </div>
+        <div class="scrolling content">
+            <div class="title">Nutrition Facts</div>
+            <div class="serving">
+                <div class="servingSizeText">Serving Size:</div>
+                <div class="rel servingSizeField">
+                    <input type="number" value="1" class="unitQuantityBox">
+                </div>
+                <div class="servingUnit">sandwich <span class="servingWeightGrams">(<span>226<span> grams</span></span>)</span>
+                </div>
+            </div><!-- closing class="serving" -->
+
+            <div class="bar1"></div>
+            <div><strong>Amount Per Serving</strong></div>
+            <div class="line">
+                <div><strong>Calories</strong> <span id="calories"></span></div>
+            </div>
+            <div class="bar2"></div>
+            <div class="line">
+                <div><strong>Protein</strong> <span id="Protein"></span></div>
+            </div>
+            <div class="line">
+                <div><strong>Carbs</strong> <span id="Carbs"></span></div>
+            </div>
+            <div class="line">
+                <div><strong>Sugar</strong> <span id="Sugar"></span></div>
+            </div>
+            <div class="line">
+                <div><strong>Sodium</strong> <span id="Sodium"></span></div>
+            </div>
+            <div class="bar1"></div>
+            <div class="dvCalorieDiet line">
+                <div class="calorieNote">
+                    <span><span class="star" aria-hidden="true">*</span> Percent Daily Values are based
+                        on a 2000 calorie diet.</span>
+                </div><!-- closing class="calorieNote" -->
+
+            </div><!-- closing class="dvCalorieDiet line" -->
+
+        </div>
+
+        <!-- Nutrition Image -->
+        <div class="actions">
+            <div class="ui black deny button right">
+                Cancel
+            </div>
+            <div class="ui positive right labeled icon button">
+                Add
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+
+        <!-- Bunrith modal -->
+        <div id="loginModal" class="ui modal">
             <i class="close icon"></i>
             <div class="header">
-                Double Double
+                Login or Sign Up
             </div>
-            <div class="scrolling content">
-                <div class="title">Nutrition Facts</div>
-                <div class="serving">
-                        <div class="servingSizeText">Serving Size:</div>
-                        <div class="rel servingSizeField">
-                            <input type="number" value="1" class="unitQuantityBox">
+            <div class="content">
+                <p>Do not have an account yet? <a id="register" href="/">Sign Up!</a></p>
+                <form class="ui large form">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="email" placeholder="E-mail address">
                         </div>
-                        <div class="servingUnit">sandwich <span class="servingWeightGrams">(<span>226<span> grams</span></span>)</span>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="Password">
                         </div>
-                </div><!-- closing class="serving" -->
-
-                <div class="bar1"></div>
-                <div><strong>Amount Per Serving</strong></div>
-                <div class="line">
-                    <div><strong>Calories</strong> <span id="calories"></span></div>
-                </div>
-                <div class="bar2"></div>
-                <div class="line">
-                    <div><strong>Protein</strong> <span id="Protein"></span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Carbs</strong> <span id="Carbs"></span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Sugar</strong> <span id="Sugar"></span></div>
-                </div>
-                <div class="line">
-                    <div><strong>Sodium</strong> <span id="Sodium"></span></div>
-                </div>
-                <div class="bar1"></div>
-                <div class="dvCalorieDiet line">
-                    <div class="calorieNote">
-                        <span><span class="star" aria-hidden="true">*</span> Percent Daily Values are based
-                            on a 2000 calorie diet.</span>
-                    </div><!-- closing class="calorieNote" -->
-
-                </div><!-- closing class="dvCalorieDiet line" -->
-                
+                    </div>
+                </form>
             </div>
-
-            <!-- Nutrition Image -->
             <div class="actions">
-                <div class="ui black deny button right">
-                    Cancel
+                <div class="ui basic button" id="register">
+                    Sign Up
                 </div>
-                <div class="ui positive right labeled icon button">
-                    Add
-                    <i class="checkmark icon"></i>
+                <div class="ui green button approve" id="login">
+                    Login
                 </div>
             </div>
-
-            <!-- Bunrith modal -->
-            <div id="loginModal" class="ui modal">
-                    <i class="close icon"></i>
-                    <div class="header">
-                        Login or Sign Up
-                    </div>
-                    <div class="content">
-                            <p>Do not have an account yet? <a id="register" href="/">Sign Up!</a></p>
-                            <form class="ui large form">
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                        <i class="user icon"></i>
-                                        <input type="text" name="email" placeholder="E-mail address">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                    <i class="lock icon"></i>
-                                    <input type="password" name="password" placeholder="Password">
-                                    </div>
-                                </div>
-                            </form>
-                    </div>
-                    <div class="actions">
-                        <div class="ui basic button" id="register">
-                            Sign Up
-                        </div>
-                        <div class="ui green button approve" id="login">
-                            Login
-                        </div>
-                     </div>
-                </div>
-
-    
         </div>
+
+
+    </div>
     </main>
 
     </div>
+
+
+    
+    <footer>
+        <div class="ui seven column grid">
+            <div class="row" style="padding-bottom: 0px">
+                <div class="column"></div>
+                <div class="column" style= "padding-top: 10px">RESOURCES   </div>
+                <div class="column" style= "padding-top: 10px">GIT HUB</div>
+                <div class="column" style= "padding-top: 10px">About Us</div>
+            </div>
+            <div class="row" style="padding: 0px;">
+                <div class="column"></div>
+                <div class="column">
+                    <a href="https://www.nutritionix.com/">Nutritionix</a>
+                    <a href="https://developers.google.com/chart/interactive/docs/reference">Google Charts</a>
+                    <a href="https://semantic-ui.com/">Semantic</a>
+                </div>
+                <div class="column">
+                    <a href="https://github.com/mearatjames/Deez-Nutrients.git">Deez Nutrients</a>
+                </div>
+                <div class="column">
+                    Links
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+    
+    <footer>
+        <div class="ui inverted seven column grid ">
+            <div class="row">
+                <div class="column"></div>
+                <div style="padding: 14px">Copyright Shook Boys 2018</div>
+            </div>
+        </div>
+    </footer>
+<!-- 
+    <footer>
+        <div class="ui grey borderless inverted menu" style=" border-radius: 0px; margin: 0px; padding: 20px; ">
+            <div class="header item" style="display: flex; flex-direction: column; align-content: flex-start"> Resources
+                   <a href="https://www.nutritionix.com/" style="padding: 15px 5px 5px 0px;">Nutritionix</a>
+                   <a href="https://developers.google.com/chart/interactive/docs/reference" style="padding: 5px 5px 5px 0px;">Google Charts</a>
+                   <a href="https://semantic-ui.com/" style="padding: 5px 5px 5px 0px;">Semantic</a>                             
+            </div>
+            <div class="header item">
+                <p>
+                  Git Hub Link 
+                  <a href="https://github.com/mearatjames/Deez-Nutrients.git" class="item" style="padding: 10px 5px 5px 0px;">Deez Nutrients</a>
+                </p>
+            </div>
+            <div class="header item">
+                <p>
+                    Copyright
+
+                </p>
+                
+
+            </div>
+        </div>
+    </footer> -->
+
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.js"></script>
