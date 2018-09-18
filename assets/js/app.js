@@ -5,6 +5,7 @@ $(document)
       .sidebar('attach events', '.toc.item')
     ;
     $('.main').hide()
+;
   })
 
 //Toggle Modal
@@ -13,17 +14,230 @@ $(document).on('click', '.food .item', function() {
   .modal('toggle');
 })
 
-$(document).on('click', '#hLogin', function() {
-  $('#loginModal')
-  .modal('toggle');
+
+$(document).on('click','#adduserItem', function() {
+  $('.nutError').remove()
+  if($('#foodName').text() === ''){
+    ('#nutritionModal .actions').append(`
+        <div class="ui error message nutError">An Error has occured, please close this modal and retry.</div>
+      `)
+  }else{
+    if($('#addUserItem').hasClass('red')){
+      $('#loginModal').modal('show')
+    }else{
+      if($('#servingQty').val()){
+        //addItem(
+          // itemname,
+          // serving_unit
+          // serving_qty, 
+          // calories, 
+          // total_fat, 
+          // total_carbs, 
+          // protein
+        //)
+        fb.addItem(
+          $('#foodName').text(),
+          $('#servingQty').val(), 
+          $('#servingUnit').text(),
+          $('#calories').text(), 
+          $('#totalFat').text(),
+          $('#totalCarbs').text(),
+          $('#protein').text()
+        )
+        $('.longer.modal').modal('hide')
+      }else{
+        $('#nutritionModal .actions').append(`
+          <div class="ui error message nutError">Serving Size input is required.</div>
+        `)
+      }
+    }
+  }
+})
+
+//login modal
+$(document).on('click', '.hLogin', function() {
+  $('#loginModal').modal('toggle')
 })
 
 
+//logout modal
+$(document).on('click', '.hLogout', function() {
+  let str = localStorage.getItem('user_data').split(',')
+  $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
+  $('#logoutModal').modal('toggle')
+})
 
-//Search Eventlistener
+$(document).on('click', '#login', function() {
+  let username = $('#username').val().trim()
+  let password = $('#password').val().trim()
+  $('#form1 .message').empty()
+
+  if(!username){
+    $('#loginModal #form1').form('add errors', {
+      email: 'Username field is empty',
+    })
+  }else{
+      db.ref('/user/' + username).once('value', function(snapshot){
+          if(snapshot.val()){ 
+            if(!password){
+              $('#loginModal #form1').form('add errors', {
+                email: 'Password field is empty',
+              })
+            }else{
+              if(snapshot.val().password === password){
+                  console.log("HERFAEWF")
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  $('#loginModal ').modal('hide');
+                  user.login()
+              }else{
+                $('#loginModal #form1').form('add errors', {
+                  email: 'Password is incorrect',
+                })
+              }
+            }
+          }else{
+            $('#loginModal #form1').form('add errors', {
+              email: 'Username does not exist',
+            })
+          }
+      })
+    }
+})
+
+$('#loginModal #form1').form({
+  on: 'change',
+  fields: {
+    username: {
+      identifier: 'username',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    password: {
+      identifier: 'password',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    }
+  }
+})
+
+$('#loginModal #form2').form({
+  on: 'change',
+  fields: {
+    rusername: {
+      identifier: 'rusername',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Username can not be empty'
+        }
+      ]
+    },
+    rpassword: {
+      identifier: 'rpassword',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Password can not be empty'
+        }
+      ]
+    },
+    name: {
+      identifier: 'rname',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Name can not be empty'
+        }
+      ]
+    }
+  }
+})
+
+$(document).on('click', '#register', function() {
+  let username = $('#rusername').val().trim()
+  let password = $('#rpassword').val().trim()
+  let name = $('#rname').val().trim()
+  $('#form2 .message').empty()
+
+  userRef.once('value', function(snapshot) {
+      let issues = 0
+      let issuekp = {}
+      if(!username){
+        issuekp.uname1 = 'Username field is empty'
+        issues++
+      }else if(snapshot.hasChild(username)) {
+        issuekp.uname2 = `Username "${username}" is already taken.`
+        issues++
+      }
+      if(!password){
+        issuekp.pwd1 = 'Password field is empty'
+        issues++
+      }
+      if(!name){
+        issuekp.name1 = 'Name field is empty'
+        issues++
+      }
+      if(issues > 0){
+        $('#loginModal #form2').form('add errors', issuekp)
+      }else{
+        localStorage.setItem('user_data', `${username},${password},${name}`)
+        $('#loginModal ').modal('hide')
+        user.addUser(username, password, name)
+        user.login()
+      }
+  })
+})
+
+
+//Nutritients Search Eventlistener
+$(document).on('click', 'div.nutritionSearch', function() {
+  let str = ($(this).find('a.header').text())
+  nutObj.getItem(str)
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+})
+
+//Nutritients Search Item Modal Eventlistener
+$(document).on('keyup', '#servingQty', function() {
+  if($('#servingQty').val()){
+    nutObj.getItem($('#foodName').text(), $('#servingQty').val())
+  }else{
+    $('#servingQty').attr('value', '')
+    $('#servingUnit').text('')
+    $('#servingWeightGrams').text('')
+    $('#calories').text('')
+    $('#fatCal').text('')
+    $('#totalFat').text('')
+    $('#totalFatPercent').text('')
+    $('#satFat').text('')
+    $('#satFatPercent').text('')
+    $('#transFat').text('')
+    $('#cholesterol').text('')
+    $('#cholesterolPercent').text('')
+    $('#sodium').text('')
+    $('#sodiumPercent').text('')
+    $('#totalCarbs').text('')
+    $('#totalCarbsPercent').text('')
+    $('#fiber').text('')
+    $('#fiberPercent').text('')
+    $('#sugar').text('')
+    $('#protein').text('')
+  }
+})
+
+
+//Search List Eventlistener
 $(document).on('click', '#search', function() {
   $('.brand').animate({
-    margin: "20px 0px 10px 0px"
+    margin: "20px 0px 20px 0px"
   }, 1000)
 })
 $(document).on('keyup', '#search', search)
@@ -32,10 +246,25 @@ $(document).on('keyup', '#search', search)
 function search() {
   $('.main').show()
   let str = $(this).val().trim()
-  console.log(str)
   nutObj.getItemList(str)
 }
+//Draw Chart
+function drawChart(proteinCal, carbsCal, fatCal) {
+        var data = google.visualization.arrayToDataTable([
+          ['Source', 'Percentage'],
+          ['Protein',  proteinCal],
+          ['Carbs',  carbsCal],
+          ['Fat',  fatCal],
+        ]);
 
+        var options = {
+          title: 'Source of Calories',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+}
 // Initialize Firebase
 
 var config = {
@@ -45,18 +274,19 @@ databaseURL: "https://vitamind-b6c3c.firebaseio.com",
 projectId: "vitamind-b6c3c",
 storageBucket: "vitamind-b6c3c.appspot.com",
 messagingSenderId: "870980303877"
-};
-firebase.initializeApp(config);
+}
+firebase.initializeApp(config)
 
 const db = firebase.database()
 const userRef = db.ref('user')
 const itemRef = db.ref('item')
 
-    
-
 let nutObj = {
     // retrieves a singular item from the nutrionix api
-    getItem (str) {
+    getItem (str, size) {
+        if (!size){
+          size = 1
+        }
         var settings = {
             url: 'https://trackapi.nutritionix.com/v2/natural/nutrients',
             method: 'POST',
@@ -68,12 +298,60 @@ let nutObj = {
                 'x-remote-user-id': '1'
             },
             processData: false,
-            data: '{"query":"hamburger"}'
-            }
-
+            data: `{
+              "query": "${size} ${str}"
+            }`
+        }
         $.ajax(settings).done(function (response) {
-            console.log(response)
-            return response
+            let foodName = response.foods[0].food_name
+            let protein = Math.round(response.foods[0].nf_protein)
+            let totalFat = Math.round(response.foods[0].nf_total_fat)
+            let totalCarbs = Math.round(response.foods[0].nf_total_carbohydrate)
+            let sodium = Math.round(response.foods[0].nf_sodium)
+            let sugar = Math.round(response.foods[0].nf_sugars)
+            let cholesterol = Math.round(response.foods[0].nf_cholesterol)
+            let calories = Math.round(response.foods[0].nf_calories)
+            let fiber = Math.round(response.foods[0].nf_dietary_fiber)
+            let satFat = Math.round(response.foods[0].nf_saturated_fat)
+            let transFat
+            function attr_id() {
+                for (let i = 0; i < response.foods[0].full_nutrients.length; i++) {
+                    if (response.foods[0].full_nutrients[i].attr_id == 605) {
+                        transFat = Math.round(response.foods[0].full_nutrients[i].value)
+                        return transFat
+                    } else {
+                        return transFat = 0
+                    }
+                }
+            }
+            attr_id()
+            let proteinCal = protein * 4
+            let fatCal = totalFat * 9
+            let carbsCal = totalCarbs * 4
+            
+            $('#foodName').text(foodName.charAt(0).toUpperCase() + foodName.slice(1))
+            $('#servingQty').attr('value', response.foods[0].serving_qty)
+            $('#servingUnit').text(response.foods[0].serving_unit)
+            $('#servingWeightGrams').text(response.foods[0].serving_weight_grams)
+            $('#calories').text(calories)
+            $('#fatCal').text(fatCal)
+            $('#totalFat').text(totalFat)
+            $('#totalFatPercent').text(Math.round((totalFat / 65)*100))
+            $('#satFat').text(satFat)
+            $('#satFatPercent').text(Math.round((satFat / 20)*100))
+            $('#transFat').text(transFat)
+            $('#cholesterol').text(cholesterol)
+            $('#cholesterolPercent').text(Math.round((cholesterol / 300)*100))
+            $('#sodium').text(sodium)
+            $('#sodiumPercent').text(Math.round((sodium / 2400)*100))
+            $('#totalCarbs').text(totalCarbs)
+            $('#totalCarbsPercent').text(Math.round((totalCarbs / 300)*100))
+            $('#fiber').text(fiber)
+            $('#fiberPercent').text(Math.round((fiber / 25)*100))
+            $('#sugar').text(sugar)
+            $('#protein').text(protein)
+
+            drawChart(proteinCal, carbsCal, fatCal)
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -96,31 +374,66 @@ let nutObj = {
           $('#brandedFoods').empty()
             for (let i = 0; i < 4; i++) {
             $('#commonFoods').append(`
-            <div class="item">
+            <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.common[i].photo.thumb}">
                 <div class="content">
-                    <a class="header">${response.common[i].food_name}</a>
+                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
                 </div>
             </div>
-            `);
+            `)
             $('#brandedFoods').append(`
-            <div class="item">
+            <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
                 <div class="content">
-                    <a class="header">${response.branded[i].brand_name_item_name}</a>
+                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name}</a>
                 </div>
             </div>
             `)
             }
         })
-    }
+    },
 }
 
 let user = {
+  login () {
+    $('.hLogin').html('Logout')
+    $('.hLogin').addClass('hLogout')
+    $('.hLogin').removeClass('hLogin')
+
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogout')
+    $('.pushable a').eq(4).removeClass('hLogin')
+    $('.pushable a').eq(4).html('Logout')
+
+    $('#adduserItem').removeClass('red')
+    $('#adduserItem').addClass('green')
+    $('#adduserItem').html(`Add
+    <i class="checkmark icon"></i>`)
+  },
+  logout () {
+    $('.hLogout').html('Login / Sign Up')
+    $('.hLogout').addClass('hLogin')
+    $('.hLogout').removeClass('hLogout')
+
+    $('.sidebar').removeClass('uncover visible')
+    $('.pusher').removeClass('dimmed')
+    $('.pushable a').eq(4).addClass('hLogin')
+    $('.pushable a').eq(4).removeClass('hLogout')
+    $('.pushable a').eq(4).html('Login / Sign Up')
+
+    $('#adduserItem').addClass('red')
+    $('#adduserItem').removeClass('green')
+    $('#adduserItem').html(`Login to Add to Your Tracker
+    <i class="user icon"></i>`)
+
+    localStorage.setItem('user_data', ``)
+  },
   addUser (uname, pwd, n) {
       userRef.once('value', function(snapshot) {
           if (snapshot.hasChild(uname)) {
-            alert('your user name exists. this alert needs to be refactored into on page textbox validation');
+            alert('your user name exists. this alert needs to be refactored into on page textbox validation')
           }else{
               userRef.child(uname).set({
                   password: pwd,
@@ -132,29 +445,13 @@ let user = {
   // checks local storage for a user and password str = 'user,pwd'
   authUser () {
     if(!localStorage.getItem('user_data')) {
+      $('.pushable a').eq(4).addClass('hLogin')
+      user.logout()
       return false
+    }else{
+      let user = localStorage.getItem('user_data').split(',')
+      this.checkDB(user[0],user[1])
     }
-    let user = localStorage.getItem('user_data').split(',')
-    return this.checkDB(user[0],user[1])
-  },
-
-  // validates user on login page
-  validateUser () {
-      let username = $('#username').val().trim()
-      let password = $('#password').val().trim()
-      db.ref('/user/' + username).once('value', function(snapshot){
-          if(snapshot.val()){                
-              if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password}`)
-                  console.log("Logging in, valid username and password")
-              }else{
-                  console.log("CheckDB: password doesnt match")
-                  alert("Password is incorrect")
-              }
-          }else{
-              alert("Username is not found")
-          }
-      })
   },
   // checks db to see if user exists, if so return true, else false
   checkDB (username, password) {
@@ -162,13 +459,19 @@ let user = {
           if(snapshot.val()){                
               if(snapshot.val().password === password){
                   console.log("CheckDB: password matches")
+                  $('.pushable a').eq(4).addClass('hLogout')
+                  user.login()
                   return true
               }else{
                   console.log("CheckDB: password doesnt match")
+                  $('.pushable a').eq(4).addClass('hLogin')
+                  user.logout()
                   return false
               }
           }else{
               alert("FATAL: user does not exist, cannot verify")
+              user.logout()
+              $('.pushable a').eq(4).addClass('hLogin')
           }
       })
   },
@@ -176,54 +479,55 @@ let user = {
   // get name of user's name by searching db for username
   getName(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log('str[0] is ' + str[0])
-      db.ref('/user/' + str[0]).once('value', function(snapshot){
-          console.log(str[0])
-          if(snapshot.val().name === str[2]){
-              return snapshot.val().name
-          }
-      })
+      console.log(str[2])
+      return str[2]
   },
   getUser(){
-      let str = localStorage.getItem('user_data').split(',').trim()
+      let str = localStorage.getItem('user_data').split(',')
+      console.log(str[0])
       return str[0]
   }
 }
 
-let nutrients = {
-  // gets an item by id
-  getItem(item_id){
-    itemRef.on("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
-        if(childData.id === item_id){
-          return childData
-        }
-      })
-    })
-  },
-  // gets all user items
-  getUserItems(){
-    if(!user.authUser){
-      return false
-    }
-    let str = localStorage.getItem('user_data').split(',').trim()
+let fb = {
+  // gets all user items; d is in the format: "YYYY/MM/DD A hh:mm"
+  getUserItems(d){
+    let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
     var user_item = []
-    itemRef.on("value", function(snapshot) {
+    itemRef.orderByChild('date').once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val();
-        if(childData.user_id === str[0]){
-          user_item.push(childData.id)
+        var childData = childSnapshot.val()
+        if(childData.username === username){
+          //if date doesnt exist we push everything for that logged in user, 
+          //else we push specified date
+          if(!d){
+            user_item.push(childData)
+          }else if(childData.date === d){
+            user_item.push(childData)
+          }
         }
       })
     })
     return user_item
   },
-  addItem(itemname){
+  addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
+      var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
+          date: today,
           username: user.getUser(),
-          name: itemname
+          name: itemname,
+          servings: serving_qty,
+          serving_unit: serving_unit,
+          calories: calories,
+          fat: total_fat,
+          carbs: total_carbs,
+          protein: protein
       })
   }
 }
+
+//always run to determine if user is logged in on every page
+$( document ).ready(function() {
+  user.authUser()
+})

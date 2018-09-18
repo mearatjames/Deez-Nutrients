@@ -1,3 +1,18 @@
+.spacing {
+    margin: 20px 0px;
+}
+
+.health {
+    margin: 20px 0px;
+}
+
+.newsContent {
+    margin: 30px 0px !important;
+}
+.newsTitle {
+    color: darkblue;
+}
+
 .brand {
   padding: 20px;
   margin: 100px 0px 80px 0px;
@@ -40,6 +55,23 @@
 .line{
     border-top: 1px solid black;
     padding: 1px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line2{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.line3{
+    border-top: 1px solid black;
+    padding: 1px 0;
+    margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .nutritionLabel{
@@ -71,6 +103,11 @@
     }
     .secondary.pointing.menu .toc.item {
       display: block;
+    }
+    #backBtn {
+        position: fixed;
+        z-index: 11;
+        top: 80px;
     }
   }
 
