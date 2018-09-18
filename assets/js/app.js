@@ -63,7 +63,7 @@ $(document).on('click', '.hLogin', function() {
 //logout modal
 $(document).on('click', '.hLogout', function() {
   let str = localStorage.getItem('user_data').split(',')
-  $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
+  $('.logoutModalHeader').html(`${str[2]}, Logging Out? We Hope To See You Soon!`)
   $('#logoutModal').modal('toggle')
 })
 
