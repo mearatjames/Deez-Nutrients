@@ -26,7 +26,25 @@ $(document).on('click','#adduserItem', function() {
       $('#loginModal').modal('show')
     }else{
       if($('#servingQty').val()){
-        fb.addItem(`${$('#servingQty').val()} ${$('#foodName').text()}`)
+        //addItem(
+          // itemname,
+          // serving_unit
+          // serving_qty, 
+          // calories, 
+          // total_fat, 
+          // total_carbs, 
+          // protein
+        //)
+        fb.addItem(
+          $('#foodName').text(),
+          $('#servingQty').val(), 
+          $('#servingUnit').text(),
+          $('#calories').text(), 
+          $('#totalFat').text(),
+          $('#totalCarbs').text(),
+          $('#protein').text()
+        )
+        $('.longer.modal').modal('hide')
       }else{
         $('#nutritionModal .actions').append(`
           <div class="ui error message nutError">Serving Size input is required.</div>
@@ -461,12 +479,8 @@ let user = {
   // get name of user's name by searching db for username
   getName(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log('str[0] is ' + str[0])
-      db.ref('/user/' + str[0]).once('value', function(snapshot){
-          if(snapshot.val().name === str[2]){
-              return snapshot.val().name
-          }
-      })
+      console.log(str[2])
+      return str[2]
   },
   getUser(){
       let str = localStorage.getItem('user_data').split(',')
@@ -476,7 +490,7 @@ let user = {
 }
 
 let fb = {
-  // gets all user items
+  // gets all user items; d is in the format: "YYYY/MM/DD A hh:mm"
   getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
@@ -497,12 +511,18 @@ let fb = {
     })
     return user_item
   },
-  addItem(itemname){
+  addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
       var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
           date: today,
           username: user.getUser(),
-          name: itemname
+          name: itemname,
+          servings: serving_qty,
+          serving_unit: serving_unit,
+          calories: calories,
+          fat: total_fat,
+          carbs: total_carbs,
+          protein: protein
       })
   }
 }
@@ -511,5 +531,3 @@ let fb = {
 $( document ).ready(function() {
   user.authUser()
 })
-
-//comment to ignore
