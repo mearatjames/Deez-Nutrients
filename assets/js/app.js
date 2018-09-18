@@ -201,8 +201,6 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
 })
 
 //Nutritients Search Item Modal Eventlistener
@@ -249,12 +247,18 @@ function search() {
   nutObj.getItemList(str)
 }
 
-//Draw Stacked Column Chart
-let columnChart = document.getElementById('columnChart')
-if (columnChart) {
-  google.charts.load("current", {packages: ["corechart"]});
-  google.charts.setOnLoadCallback(drawColumnChart);
+//If user login, then display info in tracker.html and draw chart
+function displayTracker() {
+  $('#trackerContent').show()
+    let columnChart = document.getElementById('columnChart')
+    if (columnChart) {
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(function() {
+      drawColumnChart()
+    });
 }
+}
+//Draw Stacked Column Chart Still testing
 function drawColumnChart() {
   var data = google.visualization.arrayToDataTable([
     ['Calories Source', 'Protein', 'Carbs', 'Fat'],
@@ -381,8 +385,10 @@ let nutObj = {
             $('#fiberPercent').text(Math.round((fiber / 25)*100))
             $('#sugar').text(sugar)
             $('#protein').text(protein)
-
-            drawChart(proteinCal, carbsCal, fatCal)
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(function() {
+              drawChart(proteinCal, carbsCal, fatCal)
+            });
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -442,6 +448,8 @@ let user = {
     $('#adduserItem').addClass('green')
     $('#adduserItem').html(`Add
     <i class="checkmark icon"></i>`)
+    //For Tracker.html
+    displayTracker()
   },
   logout () {
     $('.hLogout').html('Login / Sign Up')
@@ -458,6 +466,7 @@ let user = {
     $('#adduserItem').removeClass('green')
     $('#adduserItem').html(`Login to Add to Your Tracker
     <i class="user icon"></i>`)
+  //Show LoginRequired Message and hide content
     $('#loginRequired').modal('show')
     $('#trackerContent').hide()
 
