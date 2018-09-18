@@ -341,6 +341,7 @@ let nutObj = {
             }`
         }
         $.ajax(settings).done(function (response) {
+            console.log(response)
             let foodName = response.foods[0].food_name
             let protein = Math.round(response.foods[0].nf_protein)
             let totalFat = Math.round(response.foods[0].nf_total_fat)
@@ -410,28 +411,44 @@ let nutObj = {
             }
 
         $.ajax(settings2).done(function (response) {
+          console.log(response)
           $('#commonFoods').empty()
           $('#brandedFoods').empty()
-            for (let i = 0; i < 4; i++) {
-            $('#commonFoods').append(`
-            <div class="nutritionSearch item">
-                <img class="ui avatar image" src="${response.common[i].photo.thumb}">
-                <div class="content">
-                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name.charAt(0).toUpperCase() + response.common[i].food_name.slice(1)}</a>
+          let clist = []        
+          let i = 0
+          let iindex = 0
+          let photo
+
+          while(i < 4 && iindex < 20) {
+              if((clist.indexOf(response.common[iindex].tag_id) === -1)){
+                photo = response.common[iindex].photo.thumb ? response.common[iindex].photo.thumb : ''
+                $('#commonFoods').append(`
+                <div class="nutritionSearch item">
+                    <img class="ui avatar image" src="${photo}">
+                    <div class="content">
+                        <a data-id="${response.common[iindex].tag_id}" class="header">${response.common[iindex].food_name.charAt(0).toUpperCase() + response.common[iindex].food_name.slice(1)}</a>
+                    </div>
                 </div>
-            </div>
-            `)
+                `)
+                clist.push(response.common[iindex].tag_id)
+                i++
+              }
+              iindex++
+          }
+
+          for (let i = 0; i < 4; i++) {
+            photo = response.common[iindex].photo.thumb ? response.common[iindex].photo.thumb : ''
             $('#brandedFoods').append(`
             <div class="nutritionSearch item">
-                <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
+                <img class="ui avatar image" src="${photo}">
                 <div class="content">
                     <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name.charAt(0).toUpperCase() + response.branded[i].brand_name_item_name.slice(1)}</a>
                 </div>
             </div>
             `)
-            }
+          }
         })
-    },
+    }
 }
 
 let user = {
