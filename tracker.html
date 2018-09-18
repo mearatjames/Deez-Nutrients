@@ -39,7 +39,148 @@
         </div>
       </div>
     </div>
+    <div id="trackerContent" class="ui grid container">
+        <div class="userCard sixteen wide column">
+            <div class="ui fluid centered card">
+                <div class="content">
+                    <img class="ui tiny fluid left floated image" src="assets/images/steve.jpg">
+                    <h1 id="trackerUser"  class="header">User Name</h1>
+                    <p>Current Calories consumed for today</p>
+                </div>
+            </div>
+        </div>
+        <div id="columnChart" class="ui fluid card">
+        
+        </div>
+        <div class="ui relaxed list">
+            <div class="item">
+              <div class="content">
+                <h3 class="header">Today</h3>
+                <p class="description">1500 total calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+            <div class="item">
+              <img class="ui avatar image" src="assets/images/thumbnail.png">
+              <div class="content">
+                <h3 class="header">1 cup of Milk </h3>
+                <p class="description">110 calories</p>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+<!-- Require login message modal -->
+<div id="loginRequired" class="ui basic modal">
+  <div class="ui icon header">
+      <i class="comment icon"></i>
+      <p>Login Required</p>
+      <p>Please Login or Sign Up to access the Nutrients Tracker</p>
+  </div>
+  <div class="actions">
+      <div class="ui green ok inverted button">
+          <i class="checkmark icon"></i>
+          Got It!
+      </div>
+  </div>
+</div>
+<!-- Login modal -->
+<div id="loginModal" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Login or Sign Up
+    </div>
+    <div class="content">
+        <div class="ui large header">Login</div>
+        <p>Login using your username and password</p>
+        <form id="form1" class="ui large form error">
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="username" id="username" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="password" id="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="ui right algined inline field">
+                <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+    </div>
+    <div class="ui divider"></div>
+    <div class="content">
+        <div class="ui large left header">Register</div>
+        <p>Sign Up Below!</p>
+        <form id="form2" class="ui large form error">
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="rusername" id="rusername" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="rpassword" id="rpassword" placeholder="Password">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="rname" id="rname" placeholder="Name">
+                </div>
+            </div>
+            <div class="ui left inline field">
+                <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+    </div>
+    <div class="actions">
+        <!-- <div class="ui basic button" id="register">
+                    Sign Up
+                </div> -->
+    </div>
+</div>
 
+<!-- Logout modal -->
+<div id="logoutModal" class="ui basic modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        <a class="logoutModalHeader">Logging Out?</a>
+    </div>
+    <div class="content center">
+        <p>By Clicking on Yes, You will be logged out and will be required to login to access specific parts of the
+            site.</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            No
+        </div>
+        <div class="ui green ok inverted button" onclick="user.logout()">
+            <i class="checkmark icon"></i>
+            Yes
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>

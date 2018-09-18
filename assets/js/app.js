@@ -10,7 +10,7 @@ $(document)
 
 //Toggle Modal
 $(document).on('click', '.food .item', function() {
-  $('.longer.modal')
+  $('#nutritionModal')
   .modal('toggle');
 })
 
@@ -26,7 +26,25 @@ $(document).on('click','#adduserItem', function() {
       $('#loginModal').modal('show')
     }else{
       if($('#servingQty').val()){
-        fb.addItem(`${$('#servingQty').val()} ${$('#foodName').text()}`)
+        //addItem(
+          // itemname,
+          // serving_unit
+          // serving_qty, 
+          // calories, 
+          // total_fat, 
+          // total_carbs, 
+          // protein
+        //)
+        fb.addItem(
+          $('#foodName').text(),
+          $('#servingQty').val(), 
+          $('#servingUnit').text(),
+          $('#calories').text(), 
+          $('#totalFat').text(),
+          $('#totalCarbs').text(),
+          $('#protein').text()
+        )
+        $('.longer.modal').modal('hide')
       }else{
         $('#nutritionModal .actions').append(`
           <div class="ui error message nutError">Serving Size input is required.</div>
@@ -183,8 +201,6 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
 })
 
 //Nutritients Search Item Modal Eventlistener
@@ -230,7 +246,47 @@ function search() {
   let str = $(this).val().trim()
   nutObj.getItemList(str)
 }
-//Draw Chart
+
+//If user login, then display info in tracker.html and draw chart
+function displayTracker() {
+  $('#trackerContent').show()
+  let user = localStorage.getItem('user_data').split(',')
+  $('#trackerUser').text(user[2])
+  fb.getUserItems()
+    let columnChart = document.getElementById('columnChart')
+    if (columnChart) {
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(function() {
+      drawColumnChart()
+    });
+}
+}
+//Draw Stacked Column Chart Still testing
+function drawColumnChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Calories Source', 'Protein', 'Carbs', 'Fat'],
+    ['Mon', 200, 1000, 400],
+    ['Tue', 500, 1200, 600],
+    ['Wed', 400, 700, 800],
+    ['Thu', 300, 650, 500],
+    ['Fri', 100, 900, 200],
+    ['Sat', 432, 1000, 900],
+    ['Sun', 600, 700, 500]
+  ]);
+
+  var options = {
+    legend: { position: 'top', maxLines: 3 },
+    bar: { groupWidth: '75%' },
+    vAxis: {
+      title: 'Total Calories'
+    },
+    isStacked: true,
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
+  chart.draw(data, options)
+}
+
+//Draw Pie Chart
 function drawChart(proteinCal, carbsCal, fatCal) {
         var data = google.visualization.arrayToDataTable([
           ['Source', 'Percentage'],
@@ -332,8 +388,10 @@ let nutObj = {
             $('#fiberPercent').text(Math.round((fiber / 25)*100))
             $('#sugar').text(sugar)
             $('#protein').text(protein)
-
-            drawChart(proteinCal, carbsCal, fatCal)
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(function() {
+              drawChart(proteinCal, carbsCal, fatCal)
+            });
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -393,6 +451,8 @@ let user = {
     $('#adduserItem').addClass('green')
     $('#adduserItem').html(`Add
     <i class="checkmark icon"></i>`)
+    //For Tracker.html
+    displayTracker()
   },
   logout () {
     $('.hLogout').html('Login / Sign Up')
@@ -409,6 +469,9 @@ let user = {
     $('#adduserItem').removeClass('green')
     $('#adduserItem').html(`Login to Add to Your Tracker
     <i class="user icon"></i>`)
+  //Show LoginRequired Message and hide content
+    $('#loginRequired').modal('show')
+    $('#trackerContent').hide()
 
     localStorage.setItem('user_data', ``)
   },
@@ -461,12 +524,8 @@ let user = {
   // get name of user's name by searching db for username
   getName(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log('str[0] is ' + str[0])
-      db.ref('/user/' + str[0]).once('value', function(snapshot){
-          if(snapshot.val().name === str[2]){
-              return snapshot.val().name
-          }
-      })
+      console.log(str[2])
+      return str[2]
   },
   getUser(){
       let str = localStorage.getItem('user_data').split(',')
@@ -476,46 +535,47 @@ let user = {
 }
 
 let fb = {
-  // gets an item by id
-  getItem(item_id){
-    itemRef.on("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val()
-        if(childData.id === item_id){
-          return childData
-        }
-      })
-    })
-  },
-  // gets all user items
+  // gets all user items; d is in the format: "YYYY/MM/DD A hh:mm"
   getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
     var user_item = []
-    itemRef.on("value", function(snapshot) {
+    itemRef.orderByChild('date').once("value", function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childData = childSnapshot.val()
         if(childData.username === username){
           //if date doesnt exist we push everything for that logged in user, 
           //else we push specified date
           if(!d){
-            user_item.push(childData.name)
+            user_item.push(childData)
           }else if(childData.date === d){
-            user_item.push(childData.name)
+            user_item.push(childData)
           }
         }
       })
     })
+    displayItem(user_item)
     return user_item
   },
-  addItem(itemname){
-      var today = moment().format("MM/DD/YYY hh:mm A")
+  addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
+      var today = moment().format("YYYY/MM/DD A hh:mm")
       itemRef.push({
           date: today,
           username: user.getUser(),
-          name: itemname
+          name: itemname,
+          servings: serving_qty,
+          serving_unit: serving_unit,
+          calories: calories,
+          fat: total_fat,
+          carbs: total_carbs,
+          protein: protein
       })
   }
+}
+
+//Display Items to tracker
+function displayItem(user_item) {
+  console.log(user_item)
 }
 
 //always run to determine if user is logged in on every page

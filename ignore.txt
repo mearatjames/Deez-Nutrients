@@ -1,0 +1,25 @@
+ignore this file
+
+
+"pull from master to have updated code"
+git checkout master
+git pull
+
+"getting your branch up-to-date"
+git checkout bun2
+git merge master
+
+"making changes on your branch"
+** make changes **
+git add -A
+git commit -am "making some changes on my branch"
+//git push //do not push, or else it will push to bun2 and u cannot push to master. something weird with how i have bun2 setup; just checkout master and merge
+
+"pushing back up to master"
+git checkout master
+git merge bun2 //merging bun2 branch into master
+git push //pushing changes onto master
+
+git status //to see what changes are on the branch you are in
+//always do a git status to see any staged changes
+//always do a status before every checkout
