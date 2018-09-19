@@ -436,7 +436,7 @@ let nutObj = {
           }
 
           for (let i = 0; i < 4; i++) {
-            photo = response.common[iindex].photo.thumb ? response.common[iindex].photo.thumb : 'assets/images/thumbnail.png'
+            photo = response.branded[i].photo.thumb ? response.branded[i].photo.thumb : 'assets/images/thumbnail.png'
             $('#brandedFoods').append(`
             <div class="nutritionSearch item">
                 <img class="ui avatar image" src="${photo}">
