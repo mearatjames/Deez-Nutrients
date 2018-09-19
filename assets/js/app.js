@@ -160,11 +160,16 @@ $('#loginModal #form2').form({
   }
 })
 
+$('#avatar').dropdown()
+
 $(document).on('click', '#register', function() {
   let username = $('#rusername').val().trim()
   let password = $('#rpassword').val().trim()
   let name = $('#rname').val().trim()
+  let avatar = $( "#chosenone" ).val()
   $('#form2 .message').empty()
+
+  console.log($( "#chosenone" ).val())
 
   userRef.once('value', function(snapshot) {
       let issues = 0
@@ -184,12 +189,16 @@ $(document).on('click', '#register', function() {
         issuekp.name1 = 'Name field is empty'
         issues++
       }
+      if($( "#chosenone" ).val() === ''){
+        issuekp.avatar = 'Choose an avatar'
+        issues++
+      }
       if(issues > 0){
         $('#loginModal #form2').form('add errors', issuekp)
       }else{
-        localStorage.setItem('user_data', `${username},${password},${name}`)
+        localStorage.setItem('user_data', `${username},${password},${name}, ${avatar}`)
         $('#loginModal ').modal('hide')
-        user.addUser(username, password, name)
+        user.addUser(username, password, name, avatar)
         user.login()
       }
   })
