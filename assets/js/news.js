@@ -29,6 +29,7 @@ function display(response) {
 }
 
 function topics(response) {
+    console.log(moment(response.Result.Topics[0].LastUpdate).format("MMM Do YYYY"))
     for (let i = 0; i < response.Result.Topics.length; i++) {
         $('.newsContent').append(`
         <div class="sixteen wide tablet six wide computer column">
@@ -36,7 +37,7 @@ function topics(response) {
                 <div class="content">
                     <img class="ui small fluid right floated image" src="${response.Result.Topics[i].ImageUrl}">
                     <a data-id="TopicID=${response.Result.Topics[i].Id}" class="header readNews" href="#">${response.Result.Topics[i].Title}</a>
-                    <p>${response.Result.Topics[i].LastUpdate}</p>
+                    <p>${moment(response.Result.Topics[0].LastUpdate).format("MMM Do YYYY")}</p>
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@ function tools(response) {
                 <div class="content">
                     <img class="ui small fluid right floated image" src="${response.Result.Tools[i].ImageUrl}">
                     <a data-id="ToolID=${response.Result.Tools[i].Id}" class="header readNews" href="#">${response.Result.Tools[i].Title}</a>
-                    <p>${response.Result.Tools[i].LastUpdated}</p>
+                    <p>${moment(response.Result.Tools[0].LastUpdated).format("MMM Do YYYY")}</p>
                 </div>
             </div>
         </div>
@@ -98,7 +99,7 @@ function read(response) {
                     <div class="content">
                         <img class="ui small fluid right floated image" src="${content.ImageUrl}">
                         <h1 class="newsTitle">${content.Title}</h1>
-                        <p>${content.LastUpdate}</p>
+                        <p>${moment(content.LastUpdate).format("MMM Do YYYY")}</p>
                     </div>
             </div>
             `)
@@ -125,7 +126,7 @@ function read(response) {
                     <div class="content">
                         <img class="ui small fluid right floated image" src="${content.ImageUrl}">
                         <h1 class="newsTitle">${content.Title}</h1>
-                        <p>${content.LastUpdated}</p>
+                        <p>${moment(content.LastUpdated).format("MMM Do YYYY")}</p>
                     </div>
             </div>
             <div class="ui vertical left aligned segment">

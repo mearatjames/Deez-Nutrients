@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Deez Nutrients</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1 viewport-fit=cover">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.css">
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -13,81 +13,81 @@
 
 <body>
 
-    <!-- Sidebar Menu -->
-    <div class="ui vertical inverted sidebar menu">
-        <a href="index.html" class="item">Home</a>
-        <a href="tracker.html" class="item">Nutrients Tracker</a>
-        <a href="news.html" class="item active">Nutrients News</a>
-        <a href="aboutus.html" class="item">About Us</a>
-        <a class="item hLogin">Login / Sign Up</a>
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu">
+    <a href="index.html" class="item">Home</a>
+    <a href="tracker.html" class="item">Nutrients Tracker</a>
+    <a href="news.html" class="item active">Nutrients News</a>
+    <a href="aboutus.html" class="item">About Us</a>
+    <a class="item hLogin">Login / Sign Up</a>
+</div>
+
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment">
+        <div class="ui container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="toc item">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a href="index.html" class="item">Home</a>
+                <a href="tracker.html" class="item">Nutrients Tracker</a>
+                <a href="news.html" class="item active">Nutrients News</a>
+                <a href="aboutus.html" class="item">About Us</a>
+                <div class="right item">
+                    <a class="ui inverted hLogin button">Login / Sign Up</a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="pusher">
-        <div class="ui inverted vertical masthead center aligned segment">
-            <div class="ui container">
-                <div class="ui large secondary inverted pointing menu">
-                    <a class="toc item">
-                        <i class="sidebar icon"></i>
-                    </a>
-                    <a href="index.html" class="item">Home</a>
-                    <a href="tracker.html" class="item">Nutrients Tracker</a>
-                    <a href="news.html" class="item active">Nutrients News</a>
-                    <a href="aboutus.html" class="item">About Us</a>
-                    <div class="right item">
-                        <a class="ui inverted hLogin button">Login / Sign Up</a>
+    <div class="ui grid hideItems">
+        <div class="health sixteen wide column ui center aligned">
+            <h1>Health and Nutrition Topics</h1>
+        </div>
+    </div>
+    <!-- Categories -->
+    <div class="ui centered grid container hideItems">
+        <div class="ui sixteen wide column item center aligned">
+            <div class="ui centered medium image">
+                <img src="assets/images/nutrition.jpg">
+            </div>
+            <div class="middle aligned content">
+                <h1>Nutrition and Physical Activity</h1>
+            </div>
+        </div>
+        <div id="nutrition" class="ui centered cards">
+            <div class="card">
+                <div class="content">
+                    <div class="header">Nutrition</div>
+                    <div class="description">
+                        Making small changes to your eating habits can make a big difference for your health. Find out how to get started.
                     </div>
+                </div>
+                <div data-id="16" class="ui bottom attached button category">
+                    <i class="play icon"></i>
+                    View Topics
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <div class="header">Physical Activity</div>
+                    <div class="description">
+                        Regular physical activity is good for your health. Get tips to help you get more active. </div>
+                </div>
+                <div data-id="17" class="ui bottom attached button category">
+                    <i class="play icon"></i>
+                    View Topics
                 </div>
             </div>
         </div>
-        <div class="ui grid hideItems">
-            <div class="health sixteen wide column ui center aligned">
-                <h1>Health and Nutrition Topics</h1>
+
+        <div class="ui sixteen wide column item center aligned">
+            <div class="ui centered medium image">
+                <img src="assets/images/health.jpeg">
+            </div>
+            <div class="middle aligned content">
+                <h1>Health Conditions and Diseases</h1>
             </div>
         </div>
-        <!-- Categories -->
-        <div class="ui centered grid container hideItems">
-            <div class="ui sixteen wide column item center aligned">
-                <div class="ui centered medium image">
-                    <img src="assets/images/nutrition.jpg">
-                </div>
-                <div class="middle aligned content">
-                    <h1>Nutrition and Physical Activity</h1>
-                </div>
-            </div>
-            <div id="nutrition" class="ui centered cards">
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Nutrition</div>
-                        <div class="description">
-                            Making small changes to your eating habits can make a big difference for your health. Find out how to get started.
-                        </div>
-                    </div>
-                    <div data-id="16" class="ui bottom attached button category">
-                        <i class="play icon"></i>
-                        View Topics
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="content">
-                        <div class="header">Physical Activity</div>
-                        <div class="description">
-                            Regular physical activity is good for your health. Get tips to help you get more active. </div>
-                    </div>
-                    <div data-id="17" class="ui bottom attached button category">
-                        <i class="play icon"></i>
-                        View Topics
-                    </div>
-                </div>
-            </div>
-
-            <div class="ui sixteen wide column item center aligned">
-                <div class="ui centered medium image">
-                    <img src="assets/images/health.jpeg">
-                </div>
-                <div class="middle aligned content">
-                    <h1>Health Conditions and Diseases</h1>
-                </div>
-            </div>
         <div class="spacing">
             <div id="health" class="ui centered cards">
                 <div class="card">
@@ -126,12 +126,98 @@
             </div>
         </div>
     </div>
-        <div class="news">
-            <div class="ui sticky">
-                <button id="backBtn" class="white medium ui button"><i class="angle left icon"></i></button>
-            </div>
-            <div class="newsContent ui centered grid container"></div>
+    <div class="news">
+        <div class="ui sticky">
+            <button id="backBtn" class="white medium ui button"><i class="angle left icon"></i></button>
         </div>
+        <div class="newsContent ui centered grid container"></div>
+    </div>
+<!-- Login modal -->
+<div id="loginModal" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Login or Sign Up
+    </div>
+    <div class="content">
+        <div class="ui large header">Login</div>
+        <p>Login using your username and password</p>
+        <form id="form1" class="ui large form error">
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="username" id="username" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="password" id="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="ui right algined inline field">
+                <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+    </div>
+    <div class="ui divider"></div>
+    <div class="content">
+        <div class="ui large left header">Register</div>
+        <p>Sign Up Below!</p>
+        <form id="form2" class="ui large form error">
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="rusername" id="rusername" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="rpassword" id="rpassword" placeholder="Password">
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="rname" id="rname" placeholder="Name">
+                </div>
+            </div>
+            <div class="ui left inline field">
+                <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
+            </div>
+            <div class="ui error message"></div>
+        </form>
+    </div>
+    <div class="actions">
+        <!-- <div class="ui basic button" id="register">
+                    Sign Up
+                </div> -->
+    </div>
+</div>
+
+<!-- Logout modal -->
+<div id="logoutModal" class="ui basic modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        <a class="logoutModalHeader">Logging Out?</a>
+    </div>
+    <div class="content center">
+        <p>By Clicking on Yes, You will be logged out and will be required to login to access specific parts of the
+            site.
+        </p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            No
+        </div>
+        <div class="ui green ok inverted button" onclick="user.logout()">
+            <i class="checkmark icon"></i>
+            Yes
+        </div>
+    </div>
+</div>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>

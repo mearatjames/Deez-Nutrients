@@ -10,7 +10,7 @@ $(document)
 
 //Toggle Modal
 $(document).on('click', '.food .item', function() {
-  $('.longer.modal')
+  $('#nutritionModal')
   .modal('toggle');
 })
 
@@ -63,7 +63,7 @@ $(document).on('click', '.hLogin', function() {
 //logout modal
 $(document).on('click', '.hLogout', function() {
   let str = localStorage.getItem('user_data').split(',')
-  $('.logoutModalHeader').html(`${str[0]}, Logging Out? We Hope To See You Soon!`)
+  $('.logoutModalHeader').html(`${str[2]}, Logging Out? We Hope To See You Soon!`)
   $('#logoutModal').modal('toggle')
 })
 
@@ -85,7 +85,6 @@ $(document).on('click', '#login', function() {
               })
             }else{
               if(snapshot.val().password === password){
-                  console.log("HERFAEWF")
                   localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
                   $('#loginModal ').modal('hide');
                   user.login()
@@ -201,8 +200,6 @@ $(document).on('click', '#register', function() {
 $(document).on('click', 'div.nutritionSearch', function() {
   let str = ($(this).find('a.header').text())
   nutObj.getItem(str)
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
 })
 
 //Nutritients Search Item Modal Eventlistener
@@ -248,7 +245,47 @@ function search() {
   let str = $(this).val().trim()
   nutObj.getItemList(str)
 }
-//Draw Chart
+
+//If user login, then display info in tracker.html and draw chart
+function displayTracker() {
+  $('#trackerContent').show()
+  let user = localStorage.getItem('user_data').split(',')
+  $('#trackerUser').text(user[2])
+  fb.getUserItems()
+    let columnChart = document.getElementById('columnChart')
+    if (columnChart) {
+    google.charts.load("current", {packages: ["corechart"]});
+    google.charts.setOnLoadCallback(function() {
+      drawColumnChart()
+    });
+}
+}
+//Draw Stacked Column Chart Still testing
+function drawColumnChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Calories Source', 'Protein', 'Carbs', 'Fat'],
+    ['Mon', 200, 1000, 400],
+    ['Tue', 500, 1200, 600],
+    ['Wed', 400, 700, 800],
+    ['Thu', 300, 650, 500],
+    ['Fri', 100, 900, 200],
+    ['Sat', 432, 1000, 900],
+    ['Sun', 600, 700, 500]
+  ]);
+
+  var options = {
+    legend: { position: 'top', maxLines: 3 },
+    bar: { groupWidth: '75%' },
+    vAxis: {
+      title: 'Total Calories'
+    },
+    isStacked: true,
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('columnChart'));
+  chart.draw(data, options)
+}
+
+//Draw Pie Chart
 function drawChart(proteinCal, carbsCal, fatCal) {
         var data = google.visualization.arrayToDataTable([
           ['Source', 'Percentage'],
@@ -303,6 +340,7 @@ let nutObj = {
             }`
         }
         $.ajax(settings).done(function (response) {
+            console.log(response)
             let foodName = response.foods[0].food_name
             let protein = Math.round(response.foods[0].nf_protein)
             let totalFat = Math.round(response.foods[0].nf_total_fat)
@@ -350,8 +388,10 @@ let nutObj = {
             $('#fiberPercent').text(Math.round((fiber / 25)*100))
             $('#sugar').text(sugar)
             $('#protein').text(protein)
-
-            drawChart(proteinCal, carbsCal, fatCal)
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(function() {
+              drawChart(proteinCal, carbsCal, fatCal)
+            });
         })
     },
     // retrieves a list of related items to keyword from the nutrionix api
@@ -370,28 +410,44 @@ let nutObj = {
             }
 
         $.ajax(settings2).done(function (response) {
+          console.log(response)
           $('#commonFoods').empty()
           $('#brandedFoods').empty()
-            for (let i = 0; i < 4; i++) {
-            $('#commonFoods').append(`
-            <div class="nutritionSearch item">
-                <img class="ui avatar image" src="${response.common[i].photo.thumb}">
-                <div class="content">
-                    <a data-id="${response.common[i].tag_id}" class="header">${response.common[i].food_name}</a>
+          let clist = []        
+          let i = 0
+          let iindex = 0
+          let photo
+
+          while(i < 4 && iindex < 20) {
+              if((clist.indexOf(response.common[iindex].tag_id) === -1)){
+                photo = response.common[iindex].photo.thumb ? response.common[iindex].photo.thumb : 'assets/images/thumbnail.png'
+                $('#commonFoods').append(`
+                <div class="nutritionSearch item">
+                    <img class="ui avatar image" src="${photo}">
+                    <div class="content">
+                        <a data-id="${response.common[iindex].tag_id}" class="header">${response.common[iindex].food_name.charAt(0).toUpperCase() + response.common[iindex].food_name.slice(1)}</a>
+                    </div>
                 </div>
-            </div>
-            `)
+                `)
+                clist.push(response.common[iindex].tag_id)
+                i++
+              }
+              iindex++
+          }
+
+          for (let i = 0; i < 4; i++) {
+            photo = response.branded[i].photo.thumb ? response.branded[i].photo.thumb : 'assets/images/thumbnail.png'
             $('#brandedFoods').append(`
             <div class="nutritionSearch item">
-                <img class="ui avatar image" src="${response.branded[i].photo.thumb}">
+                <img class="ui avatar image" src="${photo}">
                 <div class="content">
-                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name}</a>
+                    <a data-id="${response.branded[i].nix_item_id}" class="header">${response.branded[i].brand_name_item_name.charAt(0).toUpperCase() + response.branded[i].brand_name_item_name.slice(1)}</a>
                 </div>
             </div>
             `)
-            }
+          }
         })
-    },
+    }
 }
 
 let user = {
@@ -411,6 +467,8 @@ let user = {
     $('#adduserItem').addClass('green')
     $('#adduserItem').html(`Add
     <i class="checkmark icon"></i>`)
+    //For Tracker.html
+    displayTracker()
   },
   logout () {
     $('.hLogout').html('Login / Sign Up')
@@ -427,6 +485,9 @@ let user = {
     $('#adduserItem').removeClass('green')
     $('#adduserItem').html(`Login to Add to Your Tracker
     <i class="user icon"></i>`)
+  //Show LoginRequired Message and hide content
+    $('#loginRequired').modal('show')
+    $('#trackerContent').hide()
 
     localStorage.setItem('user_data', ``)
   },
@@ -509,6 +570,7 @@ let fb = {
         }
       })
     })
+    displayItem(user_item)
     return user_item
   },
   addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
@@ -525,6 +587,11 @@ let fb = {
           protein: protein
       })
   }
+}
+
+//Display Items to tracker
+function displayItem(user_item) {
+  console.log(user_item)
 }
 
 //always run to determine if user is logged in on every page
