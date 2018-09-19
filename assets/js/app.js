@@ -252,14 +252,9 @@ function displayTracker() {
   let user = localStorage.getItem('user_data').split(',')
   $('#trackerUser').text(user[2])
   fb.getUserItems()
-    let columnChart = document.getElementById('columnChart')
-    if (columnChart) {
-    google.charts.load("current", {packages: ["corechart"]});
-    google.charts.setOnLoadCallback(function() {
-      drawColumnChart()
-    });
+
 }
-}
+
 //Draw Stacked Column Chart Still testing
 function drawColumnChart() {
   var data = google.visualization.arrayToDataTable([
@@ -555,23 +550,24 @@ let fb = {
   getUserItems(d){
     let str = localStorage.getItem('user_data').split(',')
     let username = str[0]
-    var user_item = []
-    itemRef.orderByChild('date').once("value", function(snapshot) {
-      snapshot.forEach(function(childSnapshot) {
-        var childData = childSnapshot.val()
-        if(childData.username === username){
-          //if date doesnt exist we push everything for that logged in user, 
-          //else we push specified date
-          if(!d){
-            user_item.push(childData)
-          }else if(childData.date === d){
-            user_item.push(childData)
+    
+    itemRef.orderByChild('date')
+      .once("value", function(snapshot) {
+        let user_items = []
+        snapshot.forEach(function(childSnapshot) {
+          var childData = childSnapshot.val()
+          if(childData.username === username){
+            //if date doesnt exist we push everything for that logged in user, 
+            //else we push specified date
+            if(!d){
+              user_items.push(childData)
+            }else if(childData.date === d){
+              user_items.push(childData)
+            }
           }
-        }
+        })
+        displayItem(user_items)
       })
-    })
-    displayItem(user_item)
-    return user_item
   },
   addItem(itemname, serving_qty, serving_unit, calories, total_fat, total_carbs, protein){
       var today = moment().format("YYYY/MM/DD A hh:mm")
@@ -590,8 +586,19 @@ let fb = {
 }
 
 //Display Items to tracker
-function displayItem(user_item) {
-  console.log(user_item)
+function displayItem(user_items) {
+  console.log(user_items[0])
+  console.log(moment())
+  for (let i = 0; i < user_items.length; i++) {
+    console.log(user_items[i])  
+  }
+  let columnChart = document.getElementById('columnChart')
+  if (columnChart) {
+  google.charts.load("current", {packages: ["corechart"]});
+  google.charts.setOnLoadCallback(function() {
+    drawColumnChart(user_items)
+  });
+}
 }
 
 //always run to determine if user is logged in on every page
