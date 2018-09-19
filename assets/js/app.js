@@ -598,3 +598,6 @@ function displayItem(user_item) {
 $( document ).ready(function() {
   user.authUser()
 })
+
+$('.ui.fluid.selection.dropdown')
+  .dropdown();
