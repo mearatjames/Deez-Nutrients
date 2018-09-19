@@ -6,8 +6,6 @@ function off() {
   document.getElementById("overlay").style.display = "none";
 }
 
-on()
-
 $(document)
   .ready(function() {
     // create sidebar and attach to menu open
