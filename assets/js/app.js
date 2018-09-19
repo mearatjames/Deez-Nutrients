@@ -614,3 +614,5 @@ function displayItem(user_items) {
 $( document ).ready(function() {
   user.authUser()
 })
+
+moment().day(1)
