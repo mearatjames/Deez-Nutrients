@@ -139,9 +139,6 @@
     }
 }
 
-.mlogo img {
-}
-
 #overlay {
     position: absolute; /* Sit on top of the page content */
     display: none; /* Hidden by default */
