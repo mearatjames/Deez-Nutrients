@@ -130,6 +130,10 @@
     .menu .right .button, .dlogo {
         display: none;
     }
+    #myVideo {
+        right: -500px;
+        top: -100px;
+    }
   }
 
   /*Media Query*/
