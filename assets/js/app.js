@@ -283,16 +283,17 @@ function displayTracker() {
 }
 
 //Draw Stacked Column Chart Still testing
-function drawColumnChart() {
+function drawColumnChart(columnArr) {
   var data = google.visualization.arrayToDataTable([
     ['Calories Source', 'Protein', 'Carbs', 'Fat'],
-    ['Mon', 200, 1000, 400],
-    ['Tue', 500, 1200, 600],
-    ['Wed', 400, 700, 800],
-    ['Thu', 300, 650, 500],
-    ['Fri', 100, 900, 200],
-    ['Sat', 432, 1000, 900],
-    ['Sun', 600, 700, 500]
+    columnArr[0],
+    columnArr[1],
+    columnArr[2],
+    columnArr[3],
+    columnArr[4],
+    columnArr[5],
+    columnArr[6],
+
   ]);
 
   var options = {
@@ -614,18 +615,41 @@ let fb = {
 
 //Display Items to tracker
 function displayItem(user_items) {
-  console.log(user_items[0])
-  console.log(moment())
-  for (let i = 0; i < user_items.length; i++) {
-    console.log(user_items[i])  
+  let columnArr = []
+  for (let i = 0; i < 7; i++) {
+    let totalArr = []
+    let dayArr = []
+    for (let j = 0; j < user_items.length; j++) {
+      let eatenDate = moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY")
+      if (eatenDate == moment().subtract(i, 'days').format("MM/DD/YYYY")) {
+        totalArr.unshift(user_items[j])
+      }
+    }
+    let totalFat = 0
+    let totalCarbs = 0
+    let totalProtein = 0
+    for (let k = 0; k < totalArr.length; k++) {
+    totalFat += parseInt(totalArr[k].fat)
+    totalCarbs += parseInt(totalArr[k].carbs)
+    totalProtein += parseInt(totalArr[k].protein)
+    }
+    dayArr.push(moment().subtract(i, 'days').format("ddd"), totalFat * 9, totalCarbs * 4, totalProtein * 4)
+    columnArr.unshift(dayArr)
   }
+  console.log(columnArr)
+ 
+  let totalCal = columnArr[6][1] + columnArr[6][2] + columnArr[6][3]
+  $('.dailyCal').text(totalCal)
+
+  //If there's a #columnChart, then draw the chart (prevent google draw chart to run on other page)
   let columnChart = document.getElementById('columnChart')
   if (columnChart) {
   google.charts.load("current", {packages: ["corechart"]});
   google.charts.setOnLoadCallback(function() {
-    drawColumnChart(user_items)
+    drawColumnChart(columnArr)
   });
 }
+
 }
 
 //always run to determine if user is logged in on every page
