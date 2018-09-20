@@ -127,7 +127,20 @@
     #logo {
         display:none !important;
     }
+    .menu .right .button, .dlogo {
+        display: none;
+    }
   }
+
+  /*Media Query*/
+@media only screen and (min-width: 701px) {
+    .menu .right .button, .dlogo {
+        display: inherit;
+    }
+}
+
+.mlogo img {
+}
 
 #overlay {
     position: absolute; /* Sit on top of the page content */
@@ -155,4 +168,3 @@
 .brand h1 {
     color: white;
 }
-  
