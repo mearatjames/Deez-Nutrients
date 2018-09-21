@@ -93,7 +93,7 @@ $(document).on('click', '#login', function() {
               })
             }else{
               if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}, ${snapshot.val().avatar}`)
                   $('#loginModal ').modal('hide');
                   user.login()
               }else{
@@ -250,8 +250,15 @@ $(document).on('keyup', '#servingQty', function() {
 
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
+  $('#myVideo').remove()
+  $(".brand img").fadeTo(1,1, function() {
+    $(".brand img").attr("src","assets/images/logoo.png")
+  }).fadeTo(10000,1);
   $('.brand').animate({
     margin: "20px 0px 20px 0px"
+  }, 1000)
+  $('.brand h1').animate({
+    color: '#000'
   }, 1000)
   $('.brand h1').animate({
     color: '#000'
@@ -277,19 +284,24 @@ function displayTracker() {
 }
 
 //Draw Stacked Column Chart Still testing
-function drawColumnChart() {
+function drawColumnChart(columnArr) {
   var data = google.visualization.arrayToDataTable([
     ['Calories Source', 'Protein', 'Carbs', 'Fat'],
-    ['Mon', 200, 1000, 400],
-    ['Tue', 500, 1200, 600],
-    ['Wed', 400, 700, 800],
-    ['Thu', 300, 650, 500],
-    ['Fri', 100, 900, 200],
-    ['Sat', 432, 1000, 900],
-    ['Sun', 600, 700, 500]
+    columnArr[0],
+    columnArr[1],
+    columnArr[2],
+    columnArr[3],
+    columnArr[4],
+    columnArr[5],
+    columnArr[6],
   ]);
 
   var options = {
+    animation: {
+      startup: true,
+      duration: 1000,
+      easing: 'out',
+    },
     legend: { position: 'top', maxLines: 3 },
     bar: { groupWidth: '75%' },
     vAxis: {
@@ -608,18 +620,60 @@ let fb = {
 
 //Display Items to tracker
 function displayItem(user_items) {
-  console.log(user_items[0])
-  console.log(moment())
-  for (let i = 0; i < user_items.length; i++) {
-    console.log(user_items[i])  
+  let columnArr = []
+  for (let i = 0; i < 7; i++) {
+    let totalArr = []
+    let dayArr = []
+    let dailyCal = 0
+    for (let j = 0; j < user_items.length; j++) {
+      let eatenDate = moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY")
+      if (eatenDate == moment().subtract(i, 'days').format("MM/DD/YYYY")) {
+        dailyCal += user_items[j].calories
+        if (j == user_items.length -1) {
+          $('#detailList').append(``)
+        }
+        $('#detailList').append(`
+        <div class="item sixteen column wide">
+          <div class="content">
+            <h3>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</h3>
+            <p>${user_items[j].calories} calories</p>
+            <p>${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}</p>
+          </div>
+        </div>
+        `)
+        totalArr.unshift(user_items[j])  
+      }
+    }
+    let totalFat = 0
+    let totalCarbs = 0
+    let totalProtein = 0
+    for (let k = 0; k < totalArr.length; k++) {
+    totalFat += parseInt(totalArr[k].fat)
+    totalCarbs += parseInt(totalArr[k].carbs)
+    totalProtein += parseInt(totalArr[k].protein)
+    dailyCal += parseInt(totalArr[k].calories)
+    }
+    
+    dayArr.push(moment().subtract(i, 'days').format("ddd"), totalFat * 9, totalCarbs * 4, totalProtein * 4)
+    columnArr.unshift(dayArr)
   }
+  console.log(columnArr)
+
+  
+ 
+  let todayCal = columnArr[6][1] + columnArr[6][2] + columnArr[6][3]
+  $('.dailyCal').text(todayCal)
+ 
+
+  //If there's a #columnChart, then draw the chart (prevent google draw chart to run on other page)
   let columnChart = document.getElementById('columnChart')
   if (columnChart) {
   google.charts.load("current", {packages: ["corechart"]});
   google.charts.setOnLoadCallback(function() {
-    drawColumnChart(user_items)
+    drawColumnChart(columnArr)
   });
 }
+
 }
 
 //always run to determine if user is logged in on every page
