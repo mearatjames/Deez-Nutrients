@@ -629,21 +629,38 @@ function displayItem(user_items) {
     let totalArr = []
     let dayArr = []
     let dailyCal = 0
+    let appendDate = false
+
     for (let j = 0; j < user_items.length; j++) {
       let eatenDate = moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY")
       if (eatenDate == moment().subtract(i, 'days').format("MM/DD/YYYY")) {
-        dailyCal += user_items[j].calories
-        if (j == user_items.length -1) {
-          $('#detailList').append(``)
+        dailyCal += parseInt(user_items[j].calories)
+        console.log(dailyCal)
+        if(!appendDate){
+          appendDate = true
+          let dateStr = moment(eatenDate).format("dddd, MM/DD/YYYY")
+          if (i == 0) {
+            dateStr = "Today"
+          }
+          $('#detailList').append(`
+          <div class="ui center aligned header">
+            <div style="height: 20px"></div>
+            <h3 id="#day${i}">${dateStr}</h3>
+            <p class="dailyCal2 day${i}"></p>
+          </div>
+          `)
         }
+        $(`.dailyCal2.day${i}`).html("Total Calories: " + dailyCal)
         $('#detailList').append(`
-        <div class="item sixteen column wide">
-          <div class="content">
-            <h3>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</h3>
-            <p>${user_items[j].calories} calories</p>
-            <p>${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}</p>
+        <div class='ui card'>
+        <div class='content'>
+          <div class='header'>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</div>
+          <div class='meta'>${user_items[j].calories} calories</div>
+          <div class='description'>
+          ${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}
           </div>
         </div>
+      </div>
         `)
         totalArr.unshift(user_items[j])  
       }
