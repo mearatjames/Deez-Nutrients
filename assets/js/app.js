@@ -686,3 +686,4 @@ $( document ).ready(function() {
 })
 
 moment().day(1)
+
