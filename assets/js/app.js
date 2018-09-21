@@ -177,8 +177,6 @@ $(document).on('click', '#register', function() {
   let avatar = $( "#chosenone" ).val()
   $('#form2 .message').empty()
 
-  console.log($( "#chosenone" ).val())
-
   userRef.once('value', function(snapshot) {
       let issues = 0
       let issuekp = {}
@@ -372,7 +370,6 @@ let nutObj = {
             }`
         }
         $.ajax(settings).done(function (response) {
-            console.log(response)
             let foodName = response.foods[0].food_name
             let protein = Math.round(response.foods[0].nf_protein)
             let totalFat = Math.round(response.foods[0].nf_total_fat)
@@ -442,7 +439,6 @@ let nutObj = {
             }
 
         $.ajax(settings2).done(function (response) {
-          console.log(response)
           $('#commonFoods').empty()
           $('#brandedFoods').empty()
           let clist = []        
@@ -551,12 +547,10 @@ let user = {
       db.ref('/user/' + username).once('value', function(snapshot){
           if(snapshot.val()){                
               if(snapshot.val().password === password){
-                  console.log("CheckDB: password matches")
                   $('.pushable a').eq(4).addClass('hLogout')
                   user.login()
                   return true
               }else{
-                  console.log("CheckDB: password doesnt match")
                   $('.pushable a').eq(4).addClass('hLogin')
                   user.logout()
                   return false
@@ -572,12 +566,10 @@ let user = {
   // get name of user's name by searching db for username
   getName(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log(str[2])
       return str[2]
   },
   getUser(){
       let str = localStorage.getItem('user_data').split(',')
-      console.log(str[0])
       return str[0]
   }
 }
@@ -635,7 +627,6 @@ function displayItem(user_items) {
       let eatenDate = moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY")
       if (eatenDate == moment().subtract(i, 'days').format("MM/DD/YYYY")) {
         dailyCal += parseInt(user_items[j].calories)
-        console.log(dailyCal)
         if(!appendDate){
           appendDate = true
           let dateStr = moment(eatenDate).format("dddd, MM/DD/YYYY")
@@ -678,7 +669,6 @@ function displayItem(user_items) {
     dayArr.push(moment().subtract(i, 'days').format("ddd"), totalFat * 9, totalCarbs * 4, totalProtein * 4)
     columnArr.unshift(dayArr)
   }
-  console.log(columnArr)
 
   
  
