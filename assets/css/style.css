@@ -157,14 +157,11 @@
     cursor: pointer; 
 }
 
-<<<<<<< HEAD
 #aboutusCard, #health {
     margin-bottom: 10px;
 }
 
 
-=======
->>>>>>> 80e33fb921b8dc77badd7b8e6c5d49ef49e0201c
 .search {
     z-index: 9;
 }
