@@ -298,10 +298,14 @@ function drawColumnChart(columnArr) {
     columnArr[4],
     columnArr[5],
     columnArr[6],
-
   ]);
 
   var options = {
+    animation: {
+      startup: true,
+      duration: 1000,
+      easing: 'out',
+    },
     legend: { position: 'top', maxLines: 3 },
     bar: { groupWidth: '75%' },
     vAxis: {
@@ -624,10 +628,24 @@ function displayItem(user_items) {
   for (let i = 0; i < 7; i++) {
     let totalArr = []
     let dayArr = []
+    let dailyCal = 0
     for (let j = 0; j < user_items.length; j++) {
       let eatenDate = moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY")
       if (eatenDate == moment().subtract(i, 'days').format("MM/DD/YYYY")) {
-        totalArr.unshift(user_items[j])
+        dailyCal += user_items[j].calories
+        if (j == user_items.length -1) {
+          $('#detailList').append(``)
+        }
+        $('#detailList').append(`
+        <div class="item sixteen column wide">
+          <div class="content">
+            <h3>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</h3>
+            <p>${user_items[j].calories} calories</p>
+            <p>${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}</p>
+          </div>
+        </div>
+        `)
+        totalArr.unshift(user_items[j])  
       }
     }
     let totalFat = 0
@@ -637,14 +655,19 @@ function displayItem(user_items) {
     totalFat += parseInt(totalArr[k].fat)
     totalCarbs += parseInt(totalArr[k].carbs)
     totalProtein += parseInt(totalArr[k].protein)
+    dailyCal += parseInt(totalArr[k].calories)
     }
+    
     dayArr.push(moment().subtract(i, 'days').format("ddd"), totalFat * 9, totalCarbs * 4, totalProtein * 4)
     columnArr.unshift(dayArr)
   }
   console.log(columnArr)
+
+  
  
-  let totalCal = columnArr[6][1] + columnArr[6][2] + columnArr[6][3]
-  $('.dailyCal').text(totalCal)
+  let todayCal = columnArr[6][1] + columnArr[6][2] + columnArr[6][3]
+  $('.dailyCal').text(todayCal)
+ 
 
   //If there's a #columnChart, then draw the chart (prevent google draw chart to run on other page)
   let columnChart = document.getElementById('columnChart')
