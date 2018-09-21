@@ -93,7 +93,7 @@ $(document).on('click', '#login', function() {
               })
             }else{
               if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}`)
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}, ${snapshot.val().avatar}`)
                   $('#loginModal ').modal('hide');
                   user.login()
               }else{
@@ -250,8 +250,15 @@ $(document).on('keyup', '#servingQty', function() {
 
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
+  $('#myVideo').remove()
+  $(".brand img").fadeTo(1,1, function() {
+    $(".brand img").attr("src","assets/images/logoo.png")
+  }).fadeTo(10000,1);
   $('.brand').animate({
     margin: "20px 0px 20px 0px"
+  }, 1000)
+  $('.brand h1').animate({
+    color: '#000'
   }, 1000)
   $('.brand h1').animate({
     color: '#000'

@@ -127,32 +127,64 @@
     #logo {
         display:none !important;
     }
+    .menu .right .button, .dlogo {
+        display: none;
+    }
+    #myVideo {
+        right: -500px;
+        top: -100px;
+    }
   }
 
+  /*Media Query*/
+@media only screen and (min-width: 701px) {
+    .menu .right .button, .dlogo {
+        display: inherit;
+    }
+}
+
 #overlay {
-    position: absolute; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    position: absolute; 
+    display: none; 
+    width: 100%; 
+    height: 100%;
     top: 81.25px; 
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.85); /* Black background with opacity */
-    z-index: 5; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
+    background-color: rgba(0,0,0,0.15); 
+    z-index: 5;
+    cursor: pointer; 
 }
 
-
 .search {
-    z-index: 7;
+    z-index: 9;
 }
 
 .brand {
-    z-index: 7;
+    z-index: 9;
 }
 
 .brand h1 {
     color: white;
 }
-  
+
+
+.masthead {
+    z-index: 4 !important;
+}
+
+.footer {
+    z-index: 4 !important;
+}
+
+video {
+    position: fixed;
+    right: 0; 
+    bottom: 0;
+    width: auto; 
+    height: auto;
+    z-index: 3;
+    width: auto;
+    size: auto;
+}
