@@ -247,12 +247,11 @@ $(document).on('keyup', '#servingQty', function() {
   }
 })
 
-
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
   $('#myVideo').remove()
   $(".brand img").fadeTo(1,1, function() {
-    $(".brand img").attr("src","assets/images/logoo.png")
+    $(".brand img").attr("src","assets/images/Logo - Final-Final.png")
   }).fadeTo(10000,1);
   $('.brand').animate({
     margin: "20px 0px 20px 0px"
