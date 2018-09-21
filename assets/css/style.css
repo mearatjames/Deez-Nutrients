@@ -143,6 +143,10 @@
     cursor: pointer; /* Add a pointer on hover */
 }
 
+#aboutusCard, #health {
+    margin-bottom: 10px;
+}
+
 
 .search {
     z-index: 7;
