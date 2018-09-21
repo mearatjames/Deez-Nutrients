@@ -253,7 +253,7 @@ $(document).on('click', '#search', function() {
     $(".brand img").attr("src","assets/images/logoo.png")
   }).fadeTo(10000,1);
   $('.brand').animate({
-    margin: "20px 0px 20px 0px"
+    margin: "0px 0px 20px 0px"
   }, 1000)
   $('.brand h1').animate({
     color: '#000'
