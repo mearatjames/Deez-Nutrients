@@ -245,14 +245,15 @@ $(document).on('keyup', '#servingQty', function() {
   }
 })
 
+
 //Search List Eventlistener
 $(document).on('click', '#search', function() {
   $('#myVideo').remove()
   $(".brand img").fadeTo(1,1, function() {
-    $(".brand img").attr("src","assets/images/Logo - Final-Final.png")
+    $(".brand img").attr("src","assets/images/logoo.png")
   }).fadeTo(10000,1);
   $('.brand').animate({
-    margin: "0px 0px 20px 0px"
+    margin: "14px 0px 20px 0px"
   }, 1000)
   $('.brand h1').animate({
     color: '#000'
@@ -690,6 +691,3 @@ function displayItem(user_items) {
 $( document ).ready(function() {
   user.authUser()
 })
-
-moment().day(1)
-
