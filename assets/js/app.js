@@ -652,7 +652,7 @@ function displayItem(user_items) {
         }
         $(`.dailyCal2.day${i}`).html("Total Calories: " + dailyCal)
         $('#detailList').append(`
-        <div class='ui card'>
+        <div class='ui sixteen wide column card'>
         <div class='content'>
           <div class='header'>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</div>
           <div class='meta'>${user_items[j].calories} calories</div>
