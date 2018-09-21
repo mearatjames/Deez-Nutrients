@@ -264,6 +264,10 @@ $(document).on('click', '#search', function() {
     color: '#000'
   }, 1000)
   $( "#overlay" ).fadeOut( "highlight" )
+
+  let url = 'assets/images/sushi.jpg'
+  $('.bgfood').css('background', 'url('+ url +')')
+  $('#spacerabovethefooter').css('background', 'url('+ url +')')
 })
 $(document).on('keyup', '#search', search)
 
@@ -681,5 +685,4 @@ $( document ).ready(function() {
   user.authUser()
 })
 
-$('.ui.fluid.selection.dropdown')
-  .dropdown();
+moment().day(1)
