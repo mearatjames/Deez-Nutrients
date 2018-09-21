@@ -161,6 +161,13 @@
     margin-bottom: 10px;
 }
 
+#nutrition {
+    margin-bottom: 30px;
+}
+
+.override {
+    margin-bottom: 20px;
+}
 
 .search {
     z-index: 9;
