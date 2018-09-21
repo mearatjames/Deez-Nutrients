@@ -1,3 +1,11 @@
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+
 $(document)
   .ready(function() {
     // create sidebar and attach to menu open
@@ -245,6 +253,10 @@ $(document).on('click', '#search', function() {
   $('.brand').animate({
     margin: "20px 0px 20px 0px"
   }, 1000)
+  $('.brand h1').animate({
+    color: '#000'
+  }, 1000)
+  $( "#overlay" ).fadeOut( "highlight" )
 })
 $(document).on('keyup', '#search', search)
 
