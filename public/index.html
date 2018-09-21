@@ -1,65 +1,339 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/5.5.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/5.5.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/5.5.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/5.5.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/5.5.1/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Deez Nutrients</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1 viewport-fit=cover">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.css">
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="shortcut icon" type="image/png" href="assets/images/Favicon.png"/>
+</head>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+<body>
+    <!-- Sidebar Menu -->
+    <div class="ui vertical inverted sidebar menu">
+        <a href="index.html" class="item active">Home</a>
+        <a href="tracker.html" class="item">Nutrients Tracker</a>
+        <a href="news.html" class="item">Nutrients News</a>
+        <a href="aboutus.html" class="item">About Us</a>
+        <a class="item hLogin">Login / Sign Up</a>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    <!-- Main Div -->
+    <div class="pusher">
+        <video autoplay muted loop id="myVideo" align="center">
+            <source src="assets/images/food.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui container">
+                <div class="ui large secondary inverted pointing menu" id = "main-menu">
+                    <a class="toc item">
+                        <i class="sidebar icon"></i>
+                    </a>
+                    <a href="./index.html" class="dlogo">
+                        <img src="assets/images/logooo.png" style="height:60px;">
+                    </a>
+                    <a href="index.html" class="item active" >Home</a>
+                    <a href="tracker.html" class="item " >Nutrients Tracker</a>
+                    <a href="news.html" class="item " >Nutrients News</a>
+                    <a href="aboutus.html" class="item " >About Us</a>
+                    <a href="" class="logo right item mlogo" >
+                        <img src="assets/images/logoooo.png">
+                    </a>
+                    <div class="right item lbtn">
+                        <a class="ui inverted hLogin button">Login / Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main class="ui grid">
+            <div id="overlay"></div>
+            <div class="bgfood brand sixteen wide column ui center aligned">
+                <img id="logo" src="assets/images/logooo.png" alt="logo">
+                <h1>Deez Nutrients</h1>
+            </div>
+            <div class="sixteen wide column center aligned">
+                <div class="ui search big">
+                    <div class="ui icon input">
+                        <input id="search" class="prompt" type="text" autocomplete="off" placeholder="Input your food here!">
+                        <i class="search icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </div>
+            </div>
+            <div class="main sixteen wide column ui left aligned">
+                <div class="ui segments">
+                    <div class="ui red segment">
+                        <h4>Common Foods</h4>
+                    </div>
+                    <div id="commonFoods" class="food ui middle aligned selection list"></div>
+                    <div class="ui blue segment">
+                        <h4>Branded Foods</h4>
+                    </div>
+                    <div id="brandedFoods" class="food ui middle aligned selection list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="spacerabovethefooter" style="height:60px">
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
-</html>
+    </div>
+    <!-- Nutrients modal -->
+    <div id="nutritionModal" class="ui longer modal">
+        <i class="close icon"></i>
+        <div id="foodName" class="header"></div>
+        <div class="scrolling content">
+            <div class="title">Nutrition Facts</div>
+            <div class="serving">
+                <div class="servingSizeField">
+                    <span class="servingSizeText">Serving Size:</span>
+                    <input type="number" value="" id="servingQty" min="1">
+                    <span id="servingUnit"></span>
+                </div>
+                <div>(<span id="servingWeightGrams"></span>g)</div>
+            </div><!-- closing class="serving" -->
+
+            <div class="bar1"></div>
+            <div><strong>Amount Per Serving</strong></div>
+            <div class="line">
+                <div><strong>Calories </strong> <span id="calories">200</span></div>
+                <div>Calories from Fat <span id="fatCal">200</span></div>
+            </div>
+            <div class="bar2"></div>
+            <div class="line2">
+                <div><strong>% Daily Value</strong><span class="star" aria-hidden="true">*</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Total Fat </strong> <span id="totalFat"></span><span>g</span></div>
+                <div><strong id="totalFatPercent">60</strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Saturated Fat <span id="satFat"></span><span>g</span></div>
+                <div><strong id="satFatPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div><i>Trans</i> Fat <span id="transFat"></span><span>g</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Cholesterol </strong> <span id="cholesterol"></span><span>mg</span></div>
+                <div><strong id="cholesterolPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Sodium </strong> <span id="sodium"></span><span>mg</span></div>
+                <div><strong id="sodiumPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Total Carbs </strong> <span id="totalCarbs"></span><span>g</span></div>
+                <div><strong id="totalCarbsPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Dietary Fiber <span id="fiber"></span><span>g</span></div>
+                <div><strong id="fiberPercent"></strong><span>%</span></div>
+            </div>
+            <div class="line3">
+                <div>Sugar <span id="sugar"></span><span>g</span></div>
+            </div>
+            <div class="line">
+                <div><strong>Protein </strong> <span id="protein"></span><span>g</span></div>
+            </div>
+            <div class="bar1"></div>
+            <div class="dvCalorieDiet line">
+                <div class="calorieNote">
+                    <span><span class="star" aria-hidden="true">*</span> Percent Daily Values are based on a 2000
+                        calorie
+                        diet.</span>
+                </div><!-- closing class="calorieNote" -->
+
+            </div><!-- closing class="dvCalorieDiet line" -->
+            <div id="piechart" class="ui card" style="width: 100%"></div>
+        </div>
+
+        <!-- Nutrition Image -->
+        <div class="actions">
+            <div class="ui black deny button right">
+                Cancel
+            </div>
+            <div class="ui green right labeled icon button" id="adduserItem">
+                Add
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login modal -->
+    <div id="loginModal" class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Login or Sign Up
+        </div>
+        <div class="content">
+            <div class="ui large header">Login</div>
+            <p>Login using your username and password</p>
+            <form id="form1" class="ui large form error">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="username" id="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="ui right algined inline field">
+                    <button type="submit" id="login" class="ui black submit teal button" onclick="event.preventDefault()">Login</button>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+        </div>
+        <div class="ui divider"></div>
+        <div class="content">
+            <div class="ui large left header">Register</div>
+            <p>Sign Up Below!</p>
+            <form id="form2" class="ui large form error">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="rusername" id="rusername" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="rpassword" id="rpassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="rname" id="rname" placeholder="Name">
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <div class="ui fluid selection dropdown" id="avatar">
+                                <input type="hidden" name="user" id="chosenone">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Select Avatar</div>
+                                <div class="menu">
+                                  <div class="item" data-value="daniel">
+                                    <img class="ui mini avatar image" src="assets/images/daniel.png">
+                                    Daniel
+                                  </div>
+                                  <div class="item" data-value="elyse">
+                                    <img class="ui mini avatar image" src="assets/images/elyse.png">
+                                    Elyse
+                                  </div>
+                                  <div class="item" data-value="helen">
+                                    <img class="ui mini avatar image" src="assets/images/helen.png">
+                                    Helen
+                                  </div>
+                                  <div class="item" data-value="jenny">
+                                    <img class="ui mini avatar image" src="assets/images/jenny.png">
+                                    Jenny
+                                  </div>
+                                  <div class="item" data-value="kristy">
+                                    <img class="ui mini avatar image" src="assets/images/kristy.png">
+                                    Kristy
+                                  </div>
+                                  <div class="item" data-value="matthew">
+                                    <img class="ui mini avatar image" src="assets/images/matthew.png">
+                                    Matthew
+                                  </div>
+                                  <div class="item" data-value="molly">
+                                    <img class="ui mini avatar image" src="assets/images/molly.png">
+                                    Molly
+                                  </div>
+                                  <div class="item" data-value="steve">
+                                    <img class="ui mini avatar image" src="assets/images/steve.png">
+                                    Steve
+                                  </div>
+                                  <div class="item" data-value="stevie">
+                                     <img class="ui mini avatar image" src="assets/images/stevie.png">
+                                      Stevie
+                                  </div>
+                                  <div class="item" data-value="veronika">
+                                    <img class="ui mini avatar image" src="assets/images/veronika.png">
+                                    Veronika
+                                  </div>
+                                </div>
+                              </div>
+                    </div>
+                </div>
+                <div class="ui left inline field">
+                    <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
+                </div>
+                <div class="ui error message"></div>
+            </form>
+        </div>
+        
+    </div>
+
+    <!-- Logout modal -->
+    <div id="logoutModal" class="ui basic modal">
+        <div class="ui icon header">
+            <i class="archive icon"></i>
+            <a class="logoutModalHeader">Logging Out?</a>
+        </div>
+        <div class="content center">
+            <p>By Clicking on Yes, You will be logged out and will be required to login to access specific parts of the
+                site.</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <div class="ui green ok inverted button" onclick="user.logout()">
+                <i class="checkmark icon"></i>
+                Yes
+            </div>
+        </div>
+    </div>
+
+    <footer>
+      
+        <div class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <div class="ui stackable inverted equal height grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Resources</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://www.nutritionix.com/" class="item" target="_blank">Nutritionix</a>
+                            <a href="https://developers.google.com/chart/interactive/docs/reference" class="item" target="_blank">Google Charts</a>
+                            <a href="https://semantic-ui.com/" class="item" target="_blank">Semantic</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Repostiory</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://github.com/mearatjames/Deez-Nutrients.git" class="item" target="_blank">Deez-Nutrients</a>
+                          
+                        </div>
+                    </div>
+                    <div class="seven wide column">
+                        <h4 class="ui inverted header">Presented by: The Shook Boys</h4>
+                        <p>Copyright © 2018</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
