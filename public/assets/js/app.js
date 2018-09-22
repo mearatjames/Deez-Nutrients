@@ -98,7 +98,7 @@ $(document).on('click', '#login', function() {
               })
             }else{
               if(snapshot.val().password === password){
-                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name}, ${snapshot.val().avatar}`)
+                  localStorage.setItem('user_data', `${username},${password},${snapshot.val().name},${snapshot.val().avatar}`)
                   $('#loginModal ').modal('hide');
                   user.login()
               }else{
