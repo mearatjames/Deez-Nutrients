@@ -166,10 +166,6 @@
     cursor: pointer; 
 }
 
-.sidebar {
-    z-index: 6 !important;
-}
-
 #aboutusCard, #health {
     margin-bottom: 10px;
 }
