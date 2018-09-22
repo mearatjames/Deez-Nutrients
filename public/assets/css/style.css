@@ -203,6 +203,8 @@
     z-index: 3 !important;
 }
 
+html.ios, html.ios body { height: 100% !important; }
+
 video {
     position: fixed;
     right: 0; 
