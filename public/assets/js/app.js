@@ -267,7 +267,8 @@ $(document).on('click', '#search', function() {
   $('.bgfood').css('background', 'url('+ url +')')
   $('.bgfood').addClass('boxshadow')
   $('#spacerabovethefooter').css('background', 'url('+ url +')')
-l$(document).on('keyup', '#search', search)
+})
+$(document).on('keyup', '#search', search)
 
 //Search Function
 function search() {
