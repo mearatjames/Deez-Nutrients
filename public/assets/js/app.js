@@ -263,15 +263,12 @@ $(document).on('click', '#search', function() {
   $('.brand h1').animate({
     color: '#000'
   }, 1000)
-  $('.brand h1').animate({
-    color: '#000'
-  }, 1000)
   $( "#overlay" ).fadeOut( "highlight" )
 
   let url = 'assets/images/sushi.jpg'
   $('.bgfood').css('background', 'url('+ url +')')
   $('.bgfood').addClass('boxshadow')
-  $('#spacerabovethefooter').css('height', '60px')
+  $('.deez').css('text-shadow', '2px 2px #fff')
   $('#spacerabovethefooter').css('background', 'url('+ url +')')
 })
 $(document).on('keyup', '#search', search)
