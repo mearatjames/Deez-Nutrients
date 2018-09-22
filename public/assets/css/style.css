@@ -200,8 +200,8 @@
 }
 
 .sidebar {
-    z-index: 3 !important;
-}
+    z-index: 2 !important;
+}g
 
 html.ios, html.ios body { height: 100% !important; }
 
