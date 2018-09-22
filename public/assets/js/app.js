@@ -207,7 +207,7 @@ $(document).on('click', '#register', function() {
       if(issues > 0){
         $('#loginModal #form2').form('add errors', issuekp)
       }else{
-        localStorage.setItem('user_data', `${username},${password},${name}, ${avatar}`)
+        localStorage.setItem('user_data', `${username},${password},${name},${avatar}`)
         $('#loginModal ').modal('hide')
         user.addUser(username, password, name, avatar)
         user.login()

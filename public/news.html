@@ -140,6 +140,8 @@
         <div class="newsContent ui centered grid container"></div>
     </div>
 </div>
+
+
 <!-- Login modal -->
 <div id="loginModal" class="ui modal">
     <i class="close icon"></i>
@@ -191,17 +193,64 @@
                     <input type="text" name="rname" id="rname" placeholder="Name">
                 </div>
             </div>
+            <div class="two fields">
+                <div class="field">
+                    <div class="ui fluid selection dropdown" id="avatar">
+                            <input type="hidden" name="user" id="chosenone">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Avatar</div>
+                            <div class="menu">
+                                <div class="item" data-value="daniel">
+                                <img class="ui mini avatar image" src="assets/images/daniel.png">
+                                Daniel
+                                </div>
+                                <div class="item" data-value="elyse">
+                                <img class="ui mini avatar image" src="assets/images/elyse.png">
+                                Elyse
+                                </div>
+                                <div class="item" data-value="helen">
+                                <img class="ui mini avatar image" src="assets/images/helen.png">
+                                Helen
+                                </div>
+                                <div class="item" data-value="jenny">
+                                <img class="ui mini avatar image" src="assets/images/jenny.png">
+                                Jenny
+                                </div>
+                                <div class="item" data-value="kristy">
+                                <img class="ui mini avatar image" src="assets/images/kristy.png">
+                                Kristy
+                                </div>
+                                <div class="item" data-value="matthew">
+                                <img class="ui mini avatar image" src="assets/images/matthew.png">
+                                Matthew
+                                </div>
+                                <div class="item" data-value="molly">
+                                <img class="ui mini avatar image" src="assets/images/molly.png">
+                                Molly
+                                </div>
+                                <div class="item" data-value="steve">
+                                <img class="ui mini avatar image" src="assets/images/steve.png">
+                                Steve
+                                </div>
+                                <div class="item" data-value="stevie">
+                                    <img class="ui mini avatar image" src="assets/images/stevie.png">
+                                    Stevie
+                                </div>
+                                <div class="item" data-value="veronika">
+                                <img class="ui mini avatar image" src="assets/images/veronika.png">
+                                Veronika
+                                </div>
+                            </div>
+                            </div>
+                </div>
+            </div>
             <div class="ui left inline field">
                 <button type="submit" id="register" class="ui black submit green button" onclick="event.preventDefault()">Register</button>
             </div>
             <div class="ui error message"></div>
         </form>
     </div>
-    <div class="actions">
-        <!-- <div class="ui basic button" id="register">
-                    Sign Up
-                </div> -->
-    </div>
+    
 </div>
 
 <!-- Logout modal -->
