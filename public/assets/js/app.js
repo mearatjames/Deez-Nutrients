@@ -523,14 +523,15 @@ let user = {
 
     localStorage.setItem('user_data', ``)
   },
-  addUser (uname, pwd, n) {
+  addUser (uname, pwd, n, a) {
       userRef.once('value', function(snapshot) {
           if (snapshot.hasChild(uname)) {
             alert('your user name exists. this alert needs to be refactored into on page textbox validation')
           }else{
               userRef.child(uname).set({
                   password: pwd,
-                  name: n
+                  name: n,
+                  avatar: a
               })
           }
       })
