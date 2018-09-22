@@ -202,10 +202,11 @@
 /* .sidebar {
     z-index: 2 !important;
 }
+*/
 
 .uncover {
     z-index: 4 !important;
-} */
+}
 
 html.ios, html.ios body { height: 100% !important; }
 
