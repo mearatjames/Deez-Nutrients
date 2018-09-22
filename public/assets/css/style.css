@@ -199,6 +199,10 @@
     z-index: 4 !important;
 }
 
+.sidebar {
+    z-index: 3 !important;
+}
+
 video {
     position: fixed;
     right: 0; 
