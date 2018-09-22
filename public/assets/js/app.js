@@ -7,7 +7,9 @@ function off() {
 }
 
 $(document).on('click', '.sidebar a', function() {
-  window.location.replace("$(this).attr('href')")
+  if($(this).attr('href')){
+    window.location.replace("$(this).attr('href')")
+  }
 })
 
 $(document).ready(function() {
