@@ -6,8 +6,11 @@ function off() {
   document.getElementById("overlay").style.display = "none";
 }
 
-$(document)
-  .ready(function() {
+$(document).on('click', '.sidebar a', function() {
+  window.location.replace("$(this).attr('href')")
+})
+
+$(document).ready(function() {
     // create sidebar and attach to menu open
     $('.ui.sidebar')
       .sidebar('attach events', '.toc.item')
