@@ -174,6 +174,10 @@
     margin-bottom: 30px;
 }
 
+.deez {
+    text-shadow: 2px 2px #000;
+}
+
 .override {
     margin-bottom: 20px;
 }
