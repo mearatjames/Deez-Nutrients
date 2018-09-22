@@ -207,11 +207,9 @@
     z-index: 2 !important;
 }
 
-/*
-
-.uncover {
+.visible {
     z-index: 4 !important;
-} */
+}
 
 html.ios, html.ios body { height: 100% !important; }
 
