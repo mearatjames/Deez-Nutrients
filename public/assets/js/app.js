@@ -265,6 +265,7 @@ $(document).on('click', '#search', function() {
 
   let url = 'assets/images/sushi.jpg'
   $('.bgfood').css('background', 'url('+ url +')')
+  $('.bgfood').addClass('boxshadow')
   $('#spacerabovethefooter').css('background', 'url('+ url +')')
 })
 $(document).on('keyup', '#search', search)

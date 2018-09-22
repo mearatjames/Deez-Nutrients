@@ -134,12 +134,21 @@
         right: -500px;
         top: -100px;
     }
+    .margin20 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
   }
 
   /*Media Query*/
 @media only screen and (min-width: 701px) {
     .menu .right .button, .dlogo {
         display: inherit;
+    }
+    .margin20 {
+        margin: 20px;
     }
 }
 
@@ -199,4 +208,10 @@ video {
     z-index: 3;
     width: auto;
     size: auto;
+}
+
+.boxshadow {
+    -webkit-box-shadow: 0 4px 6px -6px #222;
+    -moz-box-shadow: 0 4px 6px -6px #222;
+    box-shadow: 0 4px 6px -6px #222;
 }
