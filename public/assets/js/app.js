@@ -650,7 +650,7 @@ function displayItem(user_items) {
         $('#detailList').append(`
         <div class='ui sixteen wide column card'>
         <div class='content'>
-          <div class='header'>${user_items[j].servings} ${user_items[j].serving_unit} of ${user_items[j].name}</div>
+          <div class='header'>${user_items[j].name}, ${user_items[j].servings} ${user_items[j].serving_unit}</div>
           <div class='meta'>${user_items[j].calories} calories</div>
           <div class='description'>
           ${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}
