@@ -647,10 +647,13 @@ function displayItem(user_items) {
           `)
         }
         $(`.dailyCal2.day${i}`).html("Total Calories: " + dailyCal)
+        if (i == 0) {
+          $('.dailyCal').text(dailyCal)
+        }
         $('#detailList').append(`
         <div class='ui sixteen wide column card'>
         <div class='content'>
-          <div class='header'>${user_items[j].name}, ${user_items[j].servings} ${user_items[j].serving_unit}</div>
+          <div class='header'>${user_items[j].name}, ${user_items[j].servings}${user_items[j].serving_unit}</div>
           <div class='meta'>${user_items[j].calories} calories</div>
           <div class='description'>
           ${moment(user_items[j].date, "YYYY/MM/DD A hh:mm").format("MM/DD/YYYY hh:mm A")}
@@ -673,13 +676,7 @@ function displayItem(user_items) {
     
     dayArr.push(moment().subtract(i, 'days').format("ddd"), totalFat * 9, totalCarbs * 4, totalProtein * 4)
     columnArr.unshift(dayArr)
-  }
-
-  
- 
-  let todayCal = columnArr[6][1] + columnArr[6][2] + columnArr[6][3]
-  $('.dailyCal').text(todayCal)
- 
+  } 
 
   //If there's a #columnChart, then draw the chart (prevent google draw chart to run on other page)
   let columnChart = document.getElementById('columnChart')
