@@ -16,7 +16,6 @@ Start by running
 
 ```
 $ git clone https://github.com/mearatjames/Deez-Nutrients.git
-
 ```
 
 ### Prerequisites
